@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שיעור 1 · מדריך פרקטי · בינה מלאכותית וחשיבה יצירתית</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root{
+    --bg:#f4f6ff; --card:rgba(255,255,255,.72); --stroke:rgba(99,102,241,.16);
+    --text:#1e2340; --muted:#5b6482;
+  }
+  *{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--text); font-family:'Heebo',sans-serif; overflow-x:hidden}
+
+  .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 18s ease-in-out infinite}
+  .b1{width:520px;height:520px;background:radial-gradient(circle,#c7d2fe,transparent 70%);top:-140px;right:-120px}
+  .b2{width:460px;height:460px;background:radial-gradient(circle,#f5d0fe,transparent 70%);top:20%;left:-140px;animation-delay:-6s}
+  .b3{width:420px;height:420px;background:radial-gradient(circle,#a5f3fc,transparent 70%);bottom:-120px;right:20%;animation-delay:-11s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.08)}66%{transform:translate(-30px,25px) scale(.95)}}
+
+  .glass{background:var(--card);border:1px solid var(--stroke);backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);box-shadow:0 8px 30px -18px rgba(80,90,160,.35)}
+  .glass-hover{transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s,border-color .4s}
+  .glass-hover:hover{transform:translateY(-6px);border-color:rgba(129,140,248,.55);
+    box-shadow:0 22px 45px -20px rgba(129,140,248,.65)}
+
+  .grad-text{background:linear-gradient(100deg,#6366f1,#a855f7 45%,#06b6d4);
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shimmer 6s linear infinite}
+  @keyframes shimmer{to{background-position:200% center}}
+
+  .chip{background:rgba(99,102,241,.10);border:1px solid rgba(99,102,241,.28);color:#5145cd}
+  .nav-link{position:relative;transition:.25s;color:#4b5573;white-space:nowrap}
+  .nav-link:hover{color:#312e81}
+  .nav-link::after{content:'';position:absolute;right:0;bottom:-4px;height:2px;width:0;
+    background:linear-gradient(90deg,#6366f1,#a855f7);transition:.28s;border-radius:2px}
+  .nav-link:hover::after{width:100%}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:.75s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}
+  .reveal[data-d="3"]{transition-delay:.24s}
+
+  .example{background:linear-gradient(180deg,rgba(6,182,212,.10),rgba(6,182,212,.04));
+    border:1px dashed rgba(6,182,212,.5);border-radius:12px;color:#0e7490}
+
+  .float-in{animation:floatIn .9s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes floatIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .pop{animation:pop .5s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+  .icon-badge{transition:.4s}
+  .glass-hover:hover .icon-badge{transform:rotate(-8deg) scale(1.12)}
+
+  .card-soft{background:rgba(255,255,255,.55)}
+  ::selection{background:rgba(168,85,247,.28)}
+  .task-done .tasklabel{opacity:.5;text-decoration:line-through}
+  input[type=checkbox]{accent-color:#a855f7;width:20px;height:20px;cursor:pointer;flex:none}
+  .num{font-variant-numeric:tabular-nums}
+  .progress-bar{background:linear-gradient(90deg,#6366f1,#a855f7,#06b6d4);background-size:200% auto;animation:shimmer 3s linear infinite}
+
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+
+  /* annotated screenshots - small dots + on-image popup */
+  .ss-imgwrap{position:relative;display:block;border-radius:14px}
+  .ss-imgwrap img{width:100%;display:block;border-radius:14px;border:1px solid var(--stroke)}
+  .ss-imgwrap.hide-markers .ss-dot{opacity:0;pointer-events:none}
+  .ss-dot{position:absolute;transform:translate(-50%,-50%);width:15px;height:15px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%,#c084fc,#6d5cf6);border:2px solid #fff;
+    box-shadow:0 2px 7px rgba(80,60,180,.55);cursor:pointer;z-index:3;padding:0;opacity:1;
+    transition:transform .2s,box-shadow .2s}
+  .ss-dot::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:rgba(168,85,247,.45);
+    z-index:-1;animation:dotPulse 1.9s ease-out infinite;animation-delay:var(--d,0s)}
+  @keyframes dotPulse{0%{transform:scale(.6);opacity:.9}70%,100%{transform:scale(2.6);opacity:0}}
+  .ss-dot:hover,.ss-dot.active{transform:translate(-50%,-50%) scale(1.5);box-shadow:0 4px 14px rgba(80,60,180,.75);z-index:5}
+  .ss-dot.active{background:radial-gradient(circle at 32% 30%,#67e8f9,#6d5cf6)}
+
+  .ss-pop{position:absolute;z-index:6;max-width:min(320px,90%);max-height:60vh;overflow:auto;background:#fff;border:1px solid rgba(99,102,241,.3);
+    border-radius:13px;box-shadow:0 16px 44px -12px rgba(30,34,64,.55);padding:12px 14px;
+    opacity:0;visibility:hidden;transform:scale(.94);transition:opacity .2s,transform .2s;font-size:13px;line-height:1.6}
+  .ss-pop.on{opacity:1;visibility:visible;transform:scale(1)}
+  .ss-pop b{display:block;color:#5145cd;font-size:14px;margin-bottom:5px;padding-inline-start:22px}
+  .ss-pop span{color:#475069;display:block}
+  .ss-pop-x{position:absolute;top:8px;left:10px;background:rgba(99,102,241,.1);border:none;width:22px;height:22px;
+    border-radius:50%;font-size:15px;line-height:1;color:#5145cd;cursor:pointer;display:grid;place-items:center}
+  .ss-pop-x:hover{background:rgba(99,102,241,.22)}
+
+  .ss-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .ss-btn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#5145cd;
+    background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.25);padding:7px 14px;border-radius:999px;cursor:pointer;transition:.25s}
+  .ss-btn:hover{background:rgba(99,102,241,.16);transform:translateY(-1px)}
+  .ss-hint{font-size:12px;color:#94a3b8}
+
+  @media (max-width:640px){
+    .ss-dot{width:14px;height:14px}
+    .ask-fab{bottom:14px;left:14px;padding:11px 15px;font-size:12.5px;gap:7px}
+    .ss-hint{width:100%}
+    .ss-pop{font-size:12.5px}
+  }
+
+  .lightbox{position:fixed;inset:0;background:rgba(30,34,64,.78);z-index:100;display:none;
+    align-items:center;justify-content:center;padding:24px;cursor:zoom-out;backdrop-filter:blur(8px)}
+  .lightbox.on{display:flex;animation:fadein .3s}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .lightbox img{max-width:96vw;max-height:92vh;border-radius:16px;box-shadow:0 30px 80px -20px rgba(30,34,64,.6);animation:pop .4s}
+
+  /* floating ask button */
+  .ask-fab{position:fixed;bottom:22px;left:22px;z-index:60;display:flex;align-items:center;gap:10px;
+    padding:13px 20px;border-radius:999px;color:#fff;font-weight:700;text-decoration:none;
+    background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 12px 30px -8px rgba(22,163,74,.6);
+    transition:.3s;animation:floatBtn 3s ease-in-out infinite}
+  .ask-fab:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 18px 40px -10px rgba(22,163,74,.7)}
+  @keyframes floatBtn{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="scrollbar" class="progress-bar" style="position:fixed;top:0;right:0;height:3px;width:0;z-index:60;transition:width .1s"></div>
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50 glass">
+  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="font-black text-sm md:text-lg tracking-tight grad-text shrink-0">בינה מלאכותית · שיעור 1</a>
+    <div class="flex items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
+      <a href="#summary" class="nav-link">סיכום</a>
+      <a href="#prompting" class="nav-link">פרומפטים</a>
+      <a href="#tasks" class="nav-link">משימות</a>
+      <a href="#interface" class="nav-link">ממשק</a>
+      <a href="#features" class="nav-link">כלים</a>
+      <a href="#glossary" class="nav-link">מילון</a>
+      <a href="#screens" class="nav-link">צילומים</a>
+    </div>
+    <span class="chip text-xs px-3 py-1 rounded-full shrink-0 hidden sm:inline-block">עין יעל</span>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="top" class="relative z-10 max-w-6xl mx-auto px-5 pt-32 pb-14 text-center">
+  <div class="chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 float-in">
+    <i data-lucide="sparkles" class="w-4 h-4"></i> מדריך פרקטי · מבוסס על סיכום השיעור הראשון
+  </div>
+  <h1 class="text-4xl md:text-6xl font-black leading-tight float-in" style="animation-delay:.1s">
+    בינה מלאכותית<br><span class="grad-text">וחשיבה יצירתית</span>
+  </h1>
+  <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto float-in" style="animation-delay:.2s">
+    כל מה שצריך משיעור 1 במקום אחד: הסיכום, שיטות ודוגמאות לכתיבת פרומפטים, משימות תרגול,
+    מדריך ממשק וצילומי מסך מוסברים.
+  </p>
+  <p class="mt-3 text-sm text-indigo-500 font-medium float-in" style="animation-delay:.3s">הכלים עלינו · היצירתיות עליכם</p>
+  <div class="mt-9 flex flex-wrap gap-3 justify-center float-in" style="animation-delay:.4s">
+    <a href="#screens" class="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-l from-indigo-500 to-purple-500 hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-indigo-300/50">
+      <i data-lucide="image" class="w-5 h-5"></i> צילומי מסך מוסברים
+    </a>
+    <a href="#prompting" class="px-6 py-3 rounded-xl font-bold glass glass-hover text-indigo-700">שיטות פרומפטים</a>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section id="summary" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="mb-2 reveal"><span class="grad-text text-3xl md:text-4xl font-black">סיכום השיעור</span></div>
+  <p class="text-slate-500 mb-8 reveal">חלק א' - פילוסופיית עבודה, יסודות וניהול סיכונים.</p>
+
+  <div class="grid md:grid-cols-3 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center mb-4"><i data-lucide="brain-circuit" class="w-6 h-6"></i></div>
+      <h3 class="font-bold text-lg mb-2">עידן הקנטאור</h3>
+      <p class="text-sm text-slate-600 leading-relaxed">חצי אדם - חצי מכונה. ה-AI מעבד ומנתח כמויות מידע במהירות, אך שיקול הדעת, האמפתיה וההחלטה הסופית נשארים בידי האדם. הטכנולוגיה מפנה לנו זמן למשימות שדורשות לב וקשר אנושי.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center mb-4"><i data-lucide="fingerprint" class="w-6 h-6"></i></div>
+      <h3 class="font-bold text-lg mb-2">אותנטיות וקול אישי</h3>
+      <p class="text-sm text-slate-600 leading-relaxed">האמון יורד כשמנהל שולח טקסט גנרי ומנוכר שנכתב על ידי AI. השתמשו בכלי לסיעור מוחות ועיבוד, אבל ערכו ושכתבו את הפלט כדי לשמור על הטון והסגנון שלכם.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="3">
+      <div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center mb-4"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+      <h3 class="font-bold text-lg mb-2">כלל הזהב: סודיות</h3>
+      <p class="text-sm text-slate-600 leading-relaxed">מידע רגיש, פרטים אישיים, תמונות ילדים וסודיות רפואית - לעולם לא מועלים למודלים גלויים ברשת. המודל לומד מהנתונים שלכם.</p>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 mt-6 reveal">
+    <h3 class="font-bold text-xl mb-5 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i> "התוויות נגד ותופעות לוואי" - סכנות ואזהרות בשימוש ב-AI</h3>
+    <div class="grid md:grid-cols-2 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">דיפ פייק (Deepfake)</b><p class="text-slate-600 mt-1 leading-relaxed">היכולת למדל קול, וידאו ותמונה בקלות מהווה סכנה להפצת מידע כוזב, הונאות והטרדות.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">פרטיות ואבטחת מידע</b><p class="text-slate-600 mt-1 leading-relaxed">כלל הזהב: מה שאתם לא רוצים שיופץ ברשת עליכם ועל אחרים (בדגש על סודיות רפואית של מטופלים) - אל תכניסו למודלי AI. זה כולל מידע אישי, פרטים רפואיים, תמונות של ילדים וכו'.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">"אם זה בחינם, אתם המוצר"</b><p class="text-slate-600 mt-1 leading-relaxed">המודלים החינמיים לומדים עלינו מהשאלות, הסגנון וההעדפות שלנו. מומלץ לפתוח חשבון ג'ימייל "בדוי" ללא פרטים אישיים לצורך הרשמה לשירותי AI.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">זכויות יוצרים</b><p class="text-slate-600 mt-1 leading-relaxed">התחום עדיין פרוץ. AI יכול ליצור תמונה בסגנון של אומן אחר בשניות, מה שמעלה שאלות מורכבות על קניין רוחני.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">הטיית מידע ושגיאות</b><p class="text-slate-600 mt-1 leading-relaxed">לא כל מה שה-AI אומר הוא אמת. חובה להפעיל חשיבה ביקורתית, לבדוק מקורות ולא לקבל את תשובותיו כ"תורה מסיני".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">אובדן מקומות עבודה</b><p class="text-slate-600 mt-1 leading-relaxed">AI ישנה מקצועות רבים. המפתח הוא להסתגל ולשלב את הכלי בעבודתכם כדי להפוך ליעילים יותר, במקום לחשוש שהוא יחליף אתכם.</p></div>
+      <div class="card-soft rounded-xl p-4 md:col-span-2"><b class="text-indigo-700">אובדן שליטה</b><p class="text-slate-600 mt-1 leading-relaxed">קיים חשש עתידי שהבינה המלאכותית תתפתח מעבר לשליטתנו. חשוב להיות מודעים לשיח האתי סביב הנושא ולהשתמש בטכנולוגיה באחריות.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPTING (part B) -->
+<section id="prompting" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <span class="chip inline-block text-xs px-3 py-1 rounded-full mb-3">הלב של השיעור · חלק ב'</span>
+    <h2 class="grad-text text-3xl md:text-4xl font-black">פרומפטים - שיטות ודוגמאות</h2>
+    <p class="text-slate-500 mt-2 mb-8">איך כותבים בקשה שמחזירה בדיוק את מה שרוצים.</p>
+  </div>
+
+  <div class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="coffee" class="icon-badge w-6 h-6 text-amber-500"></i><h3 class="font-bold text-lg">מהו פרומפט? אנלוגיית בית הקפה</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed">פרומפט הוא ההנחיה, השאלה או הבקשה שאנו מזינים למודל השפה. כשם שלא נבקש רק "קפה" אלא נפרט (הפוך, חזק, חלב סויה, בכוס זכוכית), כך עלינו לפרט בבקשותינו מה-AI כדי לקבל תוצאה מדויקת ואיכותית.</p>
+    <div class="example p-3 mt-3 text-sm">"קפה הפוך, חזק, חלב סויה, בכוס זכוכית"</div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal">
+    <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="layers" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">שיטת ממ"א - "מי, מה, איזה?"</h3></div>
+    <p class="text-sm text-slate-600 mb-3">דברים יכולים להיות פשוטים, ומה שנבקש נקבל. אבל לפעמים זה לא מספיק, ולכן מומלץ לנסות את השיטה הזו לכתיבת פרומפטים מורכבים:</p>
+    <div class="space-y-2 text-sm">
+      <div class="card-soft rounded-xl p-3"><b class="text-purple-700">1. מי אני?</b> באיזה "כובע" אני פונה (אחות בבית חולים, אבא לילדה בת 8, תייר בלונדון).</div>
+      <div class="card-soft rounded-xl p-3"><b class="text-purple-700">2. מה אני רוצה?</b> הבקשה הספציפית (לתכנן טיול, לפתור בעיה, למצוא רעיון למתנה).</div>
+      <div class="card-soft rounded-xl p-3"><b class="text-purple-700">3. איזה מידע אתה צריך ממני כדי שאקבל את התשובה הטובה ביותר?</b> זו השאלה החשובה ביותר. במקום לנחש מה המודל צריך לדעת, אנחנו מבקשים ממנו לשאול אותנו את השאלות הנכונות כדי שיוכל לתת את התשובה הטובה ביותר.</div>
+    </div>
+    <div class="example p-4 mt-4 text-sm"><b>הדגמה: </b>תכנון טיול בירושלים למשפחה. Gemini שאל על גילאי הילדים, תחומי עניין, קצב הטיול ותקציב, ורק לאחר קבלת התשובות בנה מסלול מותאם אישית.</div>
+    <p class="text-sm text-slate-600 mt-3 leading-relaxed">לאחר מכן אפשר לבקש מהמודל לשאול עוד שאלות עד שמרגישים שהוא מבין אותנו היטב, ורק אז לבקש את התוצר - ממש כמו פגישה עם פסיכולוגית ש"לומדת" את ההיסטוריה שלך, את החוזקות והחולשות, ואז קל לה יותר לבחור בשיטה ובכלים המתאימים ביותר עבורך.</p>
+  </div>
+
+  <div class="mt-9 reveal">
+    <h3 class="font-bold text-xl mb-1 flex items-center gap-2"><i data-lucide="wand-2" class="w-5 h-5 text-indigo-500"></i> טכניקות ודוגמאות שאפשר להוסיף לכל בקשה</h3>
+    <p class="text-xs text-cyan-600 mb-4">כל הדוגמאות להשראה בלבד - התאימו אותן לתפקיד ולצרכים שלכם.</p>
+    <div id="techGrid" class="grid sm:grid-cols-2 gap-3"></div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mt-9">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="zap" class="icon-badge w-5 h-5 text-cyan-500"></i><h3 class="font-bold text-lg">מצב רגיל</h3></div>
+      <p class="text-sm text-slate-600">תשובה מהירה וזורמת. מתאים לכתיבה יצירתית, ברכות, טיוטות מייל, פוסטים וסיעור מוחות ספונטני.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="cog" class="icon-badge w-5 h-5 text-purple-500"></i><h3 class="font-bold text-lg">מצב חושב (Reasoning)</h3></div>
+      <p class="text-sm text-slate-600">"שרשרת מחשבות" - פירוק לשלבים ובדיקה עצמית. מתאים ללוגיקה מורכבת, מתמטיקה, ניתוח דוחות והשוואת חוזים. פחות טוב ליצירתיות.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section id="tasks" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">7 משימות תרגול למנהלים</h2>
+    <p class="text-slate-500 mt-2 mb-2">משימות מורכבות ומעשיות לשבוע הקרוב. סמנו כשסיימתם - ההתקדמות נשמרת בדפדפן.</p>
+    <div class="glass rounded-full h-3 overflow-hidden mb-8"><div id="progress" class="progress-bar h-full w-0 transition-all duration-700"></div></div>
+  </div>
+  <div id="taskList" class="space-y-4"></div>
+  <p id="progressText" class="text-center text-sm text-slate-500 mt-6"></p>
+</section>
+
+<!-- INTERFACE (part C) -->
+<section id="interface" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מדריך ממשק Gemini</h2>
+    <p class="text-slate-500 mt-2 mb-8">סביבת העבודה, הכפתורים והחלפת משתמש. הצילומים המוסברים בהמשך הדף.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="panel-right" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">המסך הראשי והסרגל הצידי</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>💬 <b>שיחה חדשה</b> - חלון נקי ומניעת ערבוב הקשרים.</li>
+        <li>🔍 <b>חיפוש בצ'אטים</b> - איתור מהיר בהיסטוריה.</li>
+        <li>⋯ <b>תפריט 3 נקודות</b> על שיחה: 📌 נעיצה · ✏️ שינוי שם · 🗑️ מחיקה.</li>
+        <li>✏️ <b>שיחה זמנית</b> (עיפרון מקווקו) - לא נשמרת, למידע רגיש.</li>
+        <li>👤 <b>פרופיל</b> - החלפת משתמש בין חשבון פרטי לארגוני, שפה ומצב כהה/בהיר.</li>
+      </ul>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="pencil" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">שליטה ועריכת פרומפט</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>⏹️ <b>עצירה</b> - כפתור השליחה הופך לריבוע ועוצר מיד את המודל אם הוא בכיוון הלא נכון.</li>
+        <li>✏️ <b>עיפרון עריכה</b> - עריכת הפרומפט המקורי ששלחתם.</li>
+        <li class="pr-5">‹ <b>ביטול</b> - סגירה וחזרה לצ'אט.</li>
+        <li class="pr-5">‹ <b>עדכון</b> - שליחה מחדש, מוחק את התשובה הישנה ומייצר חדשה.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 mt-6 reveal">
+    <div class="flex items-center gap-3 mb-4"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="wrench" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">סרגל כפתורי התשובה</h3></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-3">🔊 <b>הקשבה</b> - הקראה קולית של הטקסט.</div>
+      <div class="card-soft rounded-xl p-3">📚 <b>הצגת טיוטות</b> - 3 גרסאות מקבילות לבחירה.</div>
+      <div class="card-soft rounded-xl p-3">👍👎 <b>משוב</b> - דירוג איכות התשובה.</div>
+      <div class="card-soft rounded-xl p-3">📋 <b>העתקה</b> - נקייה, עם שמירת בולטים וטבלאות.</div>
+      <div class="card-soft rounded-xl p-3">🔄 <b>רענון</b> - מוחק ומייצר תשובה חדשה מאותו פרומפט.</div>
+      <div class="card-soft rounded-xl p-3">🎨 <b>שינוי סגנון</b> - קצר/ארוך/פשוט/פחות פורמלי/מקצועי.</div>
+    </div>
+    <div class="rounded-xl p-4 mt-3 border border-emerald-200 bg-emerald-50/50 text-sm">
+      🔍 <b>"חפש בגוגל" (אייקון G)</b> - המודל מצליב עובדות מול הרשת: משפטים מגובים נצבעים <b class="text-emerald-600">בירוק</b>, ומשפטים חשודים להזיה נצבעים <b class="text-amber-600">בכתום</b>.
+    </div>
+  </div>
+
+  <!-- Desktop vs Mobile merged -->
+  <div class="glass rounded-2xl p-6 md:p-8 mt-6 reveal">
+    <div class="flex items-center gap-3 mb-2"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="monitor-smartphone" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">מחשב מול נייד - לכל אחד יתרונות</h3></div>
+    <p class="text-sm text-slate-500 mb-4">אין עדיפות לכאן או לכאן - שלבו ביניהם לפי המשימה.</p>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center gap-2 font-bold text-indigo-700 mb-2"><i data-lucide="monitor" class="w-5 h-5"></i> מה המחשב עושה טוב</div>
+        <ul class="text-slate-600 space-y-1">
+          <li>· עבודה משרדית כבדה ועריכה מדוקדקת</li>
+          <li>· פתיחת Canvas לצד הצ'אט</li>
+          <li>· ניהול והעלאת קבצים כבדים</li>
+          <li>· מסך רחב לטבלאות ומסמכים ארוכים</li>
+        </ul>
+      </div>
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center gap-2 font-bold text-purple-700 mb-2"><i data-lucide="smartphone" class="w-5 h-5"></i> מה הנייד עושה טוב (בלעדי)</div>
+        <ul class="text-slate-600 space-y-1">
+          <li>· <b>Gemini Live</b> - שיחה קולית רציפה, אפשר להתפרץ באמצע.</li>
+          <li>· <b>Camera Vision</b> - צילום מכשיר/גרף/קוד שגיאה והסבר בזמן אמת.</li>
+          <li>· <b>תרגום בשטח</b> - צילום שלטים ומסמכים בשפה זרה.</li>
+          <li>· <b>מודעות מסך</b> - Gemini קורא ומנתח את המסך הפעיל שלכם.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES (parts E-I) -->
+<section id="features" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">כלים ופיצ'רים מרכזיים</h2>
+    <p class="text-slate-500 mt-2 mb-8">כפתור ה+, מחקר עומק, פקודות @, Canvas והגדרות.</p>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="icon-badge w-12 h-12 rounded-xl chip grid place-items-center"><i data-lucide="telescope" class="w-6 h-6"></i></div>
+      <div><h3 class="font-black text-2xl">מחקר עומק (Deep Research)</h3><p class="text-sm text-slate-500">משנה את חוקי המשחק במחקר ברשת</p></div>
+    </div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-3">מחקר עומק הוא תהליך שבו הבינה המלאכותית לא רק עונה תשובה מיידית, אלא סורקת את האינטרנט, בודקת מקורות מרובים, משווה ביניהם ומספקת תשובה מפורטת ומגובה במקורות. התהליך יכול לקחת בין 5 ל-15 דקות.</p>
+    <p class="text-sm text-slate-600 leading-relaxed mb-5">חשוב להבין: הכלי מחפש רק במקורות חינמיים שמופיעים באינטרנט - הוא <b>לא</b> מחפש במאמרים בתשלום.</p>
+    <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="clipboard-check" class="w-5 h-5 text-purple-500"></i> דגשים והכנה לפני שמתחילים</h4>
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card-soft rounded-xl p-4"><div class="flex items-center gap-2 mb-1 font-bold text-indigo-700"><i data-lucide="lock" class="w-5 h-5"></i> סודיות</div><p class="text-sm text-slate-600">הימנעו לחלוטין מהעלאת פרטים מזהים של מטופלים, מידע אישי רגיש או נהלים פנימיים של מקום העבודה (כמו הדסה), כדי למנוע סיכונים משפטיים ופגיעה בפרטיות.</p></div>
+      <div class="card-soft rounded-xl p-4"><div class="flex items-center gap-2 mb-1 font-bold text-indigo-700"><i data-lucide="shield-check" class="w-5 h-5"></i> אמינות המידע</div><p class="text-sm text-slate-600">הבינה המלאכותית עלולה להמציא מידע. לכן חובה לבדוק ולאמת את המקורות והמידע המתקבל, לפי הכלל "כבדהו וחשדהו".</p></div>
+      <div class="card-soft rounded-xl p-4"><div class="flex items-center gap-2 mb-1 font-bold text-indigo-700"><i data-lucide="messages-square" class="w-5 h-5"></i> הכנה למחקר</div><p class="text-sm text-slate-600">לפני שמתחילים, נהלו שיחה מקדימה בשיטת מי? מה? איזה? הגדירו את ה"כובע" המקצועי (למשל "אני אח/אחות"), ציינו את נושא המחקר, ושאלו "איזה מידע אתה צריך ממני כדי לקבל את התוצאה הטובה ביותר?"</p></div>
+    </div>
+    <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="sliders-horizontal" class="w-5 h-5 text-purple-500"></i> ביטויי הגבלה שאפשר להוסיף לתוכנית המחקר (דוגמאות)</h4>
+    <div class="overflow-x-auto rounded-xl border border-indigo-100">
+      <table class="w-full text-sm text-right">
+        <thead class="bg-indigo-50 text-indigo-800"><tr><th class="p-3 font-bold">הביטוי</th><th class="p-3 font-bold">מתי להפעיל</th></tr></thead>
+        <tbody class="divide-y divide-indigo-50">
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"חפש גם באתרים באנגלית"</td><td class="p-3 text-slate-600">נושאים מדעיים, עסקיים או טכנולוגיים - המאגרים הבינלאומיים רחבים ומעודכנים יותר.</td></tr>
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"התבסס רק על מקורות אקדמיים"</td><td class="p-3 text-slate-600">מחקרים הדורשים תיקוף מדעי ומאמרים שעברו Peer-review.</td></tr>
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"רק מהחמש שנים האחרונות"</td><td class="p-3 text-slate-600">מונע מידע מיושן, פרוטוקולים שאינם בתוקף ונתונים לא רלוונטיים.</td></tr>
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"רק מאתרי [קטגוריה]"</td><td class="p-3 text-slate-600">מיקוד בנישה (אתרי משרדי ממשלה רשמיים או אתרי טבע וארכיאולוגיה).</td></tr>
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"כללו גם רשתות חברתיות"</td><td class="p-3 text-slate-600">מחקרי שוק, בדיקת סנטימנט ציבורי, טרנדים ותגובות צרכנים.</td></tr>
+          <tr class="hover:bg-indigo-50/40 transition"><td class="p-3 font-medium text-cyan-700">"בדוק גם אתרי יד שנייה ומכירות"</td><td class="p-3 text-slate-600">תמחור תחרותי, השוואת מחירים ובדיקת ערך שוק בזמן אמת.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 mt-6 reveal">
+    <div class="flex items-center gap-3 mb-4"><div class="icon-badge w-12 h-12 rounded-xl chip grid place-items-center"><i data-lucide="layout-grid" class="w-6 h-6"></i></div><h3 class="font-black text-2xl">פלטפורמות מומלצות למחקר עומק</h3></div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center justify-between mb-1 gap-2"><b class="text-indigo-700">Gemini (ג'מיני)</b><a href="https://gemini.google.com" target="_blank" rel="noopener" class="text-xs chip px-2.5 py-1 rounded-lg shrink-0 hover:opacity-80 transition">פתח ↗</a></div>
+        <p class="text-sm text-slate-600 leading-relaxed">סמנו את אפשרות ה-Deep Research. המערכת מציגה תוכנית מחקר לפני שהיא מתחילה - ניתן לערוך אותה ולהוסיף דרישות (מקורות אקדמיים כמו <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener" class="text-indigo-600 underline">PubMed</a>, הגבלת שנים או שפות). התוצאה: דוח מפורט עם תוכן עניינים, סיכומים, טבלאות השוואה ורשימת מקורות. ניתן לייצא ל-Google Docs או PDF, ובסיום נשלחת התראה.</p>
+      </div>
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center justify-between mb-1 gap-2"><b class="text-indigo-700">ChatGPT (צ'אטג'יפיטי)</b><a href="https://chatgpt.com" target="_blank" rel="noopener" class="text-xs chip px-2.5 py-1 rounded-lg shrink-0 hover:opacity-80 transition">פתח ↗</a></div>
+        <p class="text-sm text-slate-600 leading-relaxed">בגרסה החינמית עד 5 מחקרי עומק בחודש. מדויק ומעמיק, ולעיתים מספק תוצאות טובות יותר מכלים אחרים. ניתן לכוון אותו למקורות ספציפיים, כולל קבצים מ-Google Drive. בסיום נשלחת התראה, וניתן להוריד את הדוח או לשתף אותו בקישור.</p>
+      </div>
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center justify-between mb-1 gap-2"><b class="text-indigo-700">Grok (גרוק)</b><a href="https://grok.com" target="_blank" rel="noopener" class="text-xs chip px-2.5 py-1 rounded-lg shrink-0 hover:opacity-80 transition">פתח ↗</a></div>
+        <p class="text-sm text-slate-600 leading-relaxed">מודל השפה של אילון מאסק, הנחשב לפחות מצונזר. מחובר לרשת X (טוויטר), מה שמאפשר לו לחפש מידע עדכני וגם "חוכמת המונים" מרשתות חברתיות. נותן דוחות מפורטים עם הרבה מקורות.</p>
+      </div>
+      <div class="card-soft rounded-xl p-4">
+        <div class="flex items-center justify-between mb-1 gap-2"><b class="text-indigo-700">Perplexity (פרפלקסיטי)</b><a href="https://www.perplexity.ai" target="_blank" rel="noopener" class="text-xs chip px-2.5 py-1 rounded-lg shrink-0 hover:opacity-80 transition">פתח ↗</a></div>
+        <p class="text-sm text-slate-600 leading-relaxed">מנוע חיפוש מבוסס בינה מלאכותית. מאפשר מיקוד של החיפוש במקורות ספציפיים - אקדמיים, רשתות חברתיות או פיננסיים - ומציג את התוצאות עם מקורות מצורפים.</p>
+      </div>
+    </div>
+    <div class="rounded-xl p-4 mt-4 border border-cyan-200 bg-cyan-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-cyan-700">💡 טיפ:</b> בצעו את אותו מחקר עומק עם אותו פרומפט בכמה פלטפורמות שונות, הורידו את הדוחות שנוצרו כקובץ, ואז העלו את כולם לצ'אט אחד ובקשו להשוות ביניהם, לזהות מסקנות משותפות ולהפיק סיכום-על מקיף.
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mt-6">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="plus-circle" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">כפתור ה + - העלאת קבצים ומדיה</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>📁 קבצים מהמחשב - Word, PDF, Excel, תמונות</li>
+        <li>☁️ ייבוא מ-Google Drive</li>
+        <li>🖼️ יצירת תמונות מתיאור טקסטואלי</li>
+        <li>🔍 מחקר עומק · 🎨 Canvas</li>
+        <li>🎧 <b>אודיו (MP3/WAV)</b> - תמלול מלא בעברית, חלוקה לדוברים וסיכום פגישות</li>
+      </ul>
+      <p class="text-xs text-amber-600 mt-3">⚠️ קבצי אודיו ארוכים דורשים חלון הקשר רחב - חריגה חותכת טקסט. פתחו צ'אט חדש לכל נושא.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="at-sign" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">פקודות @ - אינטגרציה עם גוגל</h3></div>
+      <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-3">
+        <span class="card-soft rounded-lg px-3 py-1.5">@Gmail</span>
+        <span class="card-soft rounded-lg px-3 py-1.5">@Calendar</span>
+        <span class="card-soft rounded-lg px-3 py-1.5">@Docs</span>
+        <span class="card-soft rounded-lg px-3 py-1.5">@Keep</span>
+        <span class="card-soft rounded-lg px-3 py-1.5">@Tasks</span>
+        <span class="card-soft rounded-lg px-3 py-1.5">@YouTube · Maps</span>
+      </div>
+      <div class="example p-3 text-sm mb-3"><b>דוגמה · </b>"@Docs סכם לי ב-5 נקודות את המסמך 'פרוטוקול ישיבת הנהלה'."</div>
+      <p class="text-xs text-slate-500">⚙️ דרישה מחייבת: הגדרות ‹ Extensions ‹ הפעילו את מתגי האפליקציות.</p>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mt-6">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="palette" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">Canvas וייצוא</h3></div>
+      <p class="text-sm text-slate-600 mb-2">סביבת עריכה חיה דמוית Word. כפתור "Create" הופך כל טקסט ל:</p>
+      <div class="flex flex-wrap gap-2 text-xs mb-3">
+        <span class="chip px-2 py-1 rounded-lg">דף אינטרנט</span>
+        <span class="chip px-2 py-1 rounded-lg">אינפוגרפיקה</span>
+        <span class="chip px-2 py-1 rounded-lg">חידון</span>
+        <span class="chip px-2 py-1 rounded-lg">אפליקציה</span>
+        <span class="chip px-2 py-1 rounded-lg">פודקאסט</span>
+      </div>
+      <p class="text-sm text-slate-600">ייצוא ישיר ל-Google Docs, טיוטת Gmail או קישור ציבורי. שרשרת מומלצת: <b>מחקר עומק ← Google Docs ← Word/PDF</b>.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="settings-2" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">הגדרות ובוטים אישיים (Gems)</h3></div>
+      <ul class="text-sm text-slate-600 space-y-2">
+        <li><b class="text-indigo-700">הנחיות אישיות</b> - פרופיל וסגנון קבוע לכל השיחות (חובת מקורות, בלי מחמאות).</li>
+        <li><b class="text-indigo-700">ניהול זיכרון</b> - ייבוא אוטומטי של עובדות מצ'אטים קודמים.</li>
+        <li><b class="text-indigo-700">Gems</b> - עוזרי AI קבועים למשימות חוזרות עם שם, אייקון והנחיות הפעלה.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מילון מונחים</h2>
+    <p class="text-slate-500 mt-2 mb-4">המונחים המרכזיים מהשיעור. חפשו או גללו.</p>
+    <div class="relative mb-6">
+      <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2"></i>
+      <input id="glossarySearch" type="text" placeholder="חיפוש מונח..." class="w-full glass rounded-xl py-3 pr-12 pl-4 text-sm outline-none focus:border-indigo-400 transition">
+    </div>
+  </div>
+  <div id="glossaryGrid" class="grid md:grid-cols-2 gap-3"></div>
+  <p id="noResults" class="hidden text-center text-slate-400 py-8">לא נמצא מונח תואם.</p>
+</section>
+
+<!-- ANNOTATED SCREENSHOTS -->
+<section id="screens" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">צילומי מסך מוסברים</h2>
+    <p class="text-slate-500 mt-2 mb-2">כל מספר על התמונה מוסבר במקרא שמתחתיה. העבירו עכבר על מספר כדי להדגיש.</p>
+    <p class="text-xs text-slate-400 mb-8">לחיצה על התמונה מגדילה אותה.</p>
+  </div>
+  <div id="galleryGrid"></div>
+</section>
+
+<footer class="relative z-10 max-w-6xl mx-auto px-5 py-12 text-center text-slate-500 text-sm border-t border-indigo-100">
+  מדריך פרקטי לשיעור 1 · מפגש עין יעל · הכלים עלינו, היצירתיות עליכם
+</footer>
+
+<a class="ask-fab" id="askFab" href="https://wa.me/972556692412?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%AA%D7%9E%D7%A8%2C%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%A9%D7%99%D7%A2%D7%95%D7%A8%201" target="_blank" rel="noopener">
+  <i data-lucide="message-circle" class="w-5 h-5"></i> יש לכם שאלה? דברו איתי - איתמר
+</a>
+
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt=""></div>
+
+<script>
+/* ---------- PROMPT TECHNIQUES (part B, as written) ---------- */
+const techniques = [
+  {t:'הגדרת ההקשר (מי אתה)', ex:['אני אחות כירורגית ורוצה להכין הדרכת מטופל לאחר ניתוח להסרת כיס מרה.']},
+  {t:'לבקש מהמודל איזה מידע דרוש לו', ex:['אני רוצה לעשות X. מהו המידע שאתה צריך ממני כדי לתת את התוצאה הטובה ביותר?']},
+  {t:'לשייך תפקיד למודל', ex:['מעכשיו ואילך אתה מומחה בשיווק דיגיטלי. בנה לי אסטרטגיית שיווק לסטארט-אפ בתחום האופנה.']},
+  {t:'לפרק פרומפט מורכב לשלבים', ex:['במקום "כתוב עבודה על ההיסטוריה של AI":','בחר נושא ‹ פרט 3 שאלות מחקר ‹ כתוב סקירה לכל שאלה ‹ כתוב ראשי פרקים.']},
+  {t:'לתת דוגמה לפרומפט הרצוי', ex:['תרגם את הפסקה לסגנון קליל כמו בדוגמה הזו: [דוגמה].','אני רוצה תשובה בסגנון של הטקסט הבא: "..."']},
+  {t:'שילוב מולטימדיה בדוגמה (Few-Shot)', ex:['צרפו תמונה או מאמר: "צור תוצר חדש בדיוק בסגנון ובמבנה של הדוגמה הזו".']},
+  {t:'מקורות מבוססים בלבד עם קישור', ex:['פרט את היתרונות של עבודה מהבית, בהתבסס על מחקרים מבוססים בלבד עם קישור.','ציין מקורות מעודכנים לינואר 25 לכל נקודה.']},
+  {t:'לשמור על הקשר ברור בכל צ\'אט', ex:['אל תערבבו נושאים - אם שואלים על מתמטיקה, אל תעברו לשיחה על טיולים באותו צ\'אט.']},
+  {t:'בדיקת הבנה של המודל', ex:['לפני שתענה, ספר לי מה הבנת מהבקשה שלי.']},
+  {t:'לתקוף רעיון כדי לשפר אותו', ex:['תן ביקורת קשה על הרעיון שלי לפתוח מסעדה טבעונית.','דמיין שאתה לקוח לא מרוצה והסבר למה לא היית קונה.']},
+  {t:'לתקן את הפרומפט בכפתור עריכה', ex:['אם צריך לשנות בקשה - עדיף דרך כפתור העריכה (Edit message) ולא בהודעה חדשה.']},
+  {t:'מילים מובילות: "שלב אחר שלב"', ex:['פרט שלב אחר שלב איך להקים אתר אינטרנט.']},
+  {t:'תשובת בסיס ומשם לשפר', ex:['תן לי רעיונות יצירתיים יותר... ועוד יותר יצירתיים.','התשובה שנתת היא דרגה 1, תן לי תשובה בדרגה 30.']},
+  {t:'לבקש רעיונות במספרים', ex:['תן לי 10 רעיונות למסיבת יום הולדת.']},
+  {t:'לבקש מהמודל להבין מה לא עבד', ex:['מה לדעתך היה חסר בפרומפט שלי כדי לקבל תשובה טובה יותר?']},
+  {t:'הסברים פשוטים (כמו לילד בן 10)', ex:['הסבר מה זה רשת נוירונים בצורה שילד בן 10 יבין.','הסבר מה זה בינה מלאכותית למתחיל גמור.']},
+  {t:'שימוש במפרידים', ex:['ארגנו את הפרומפט עם פסיקים, נקודות, סוגריים או מספור.']},
+  {t:'לפעמים לכתוב באנגלית', ex:['במשימות מורכבות מסוימות אנגלית מניבה תוצאה מדויקת יותר מעברית.']},
+  {t:'שפה קלילה ולא פורמלית', ex:['אח שלי היקר, תן לי רעיונות יצירתיים לחגוג יום הולדת אחרת.','יאללה, תתאמץ יותר.']},
+  {t:'לחלק את העבודה לחלקים', ex:['הפרידו: שאלות, תשובות, דוגמאות ופורמט התשובה.']},
+  {t:'להגביל בזמן או בכמות מילים', ex:['תן לי סיכום של 150 מילים על ההשפעה של דיפ פייק על החברה.']},
+  {t:'להגדיר קהל יעד', ex:['תן לי 10 רעיונות למשחק על מניעת זיהומים לסטודנטים לסיעוד שנה ד\'.','מכתב למנהלת שלי לבקשת העלאה בשכר.']},
+  {t:'ללכת ישר לעניין בלי נימוסים', ex:['בלי "בבקשה" או "תודה" - ישר לבקשה.']},
+  {t:'לבחור פורמט לתשובה', ex:['בקשו טבלה, פסקאות או רשימה ממוספרת.']},
+  {t:'לבקש קובץ להורדה', ex:['הורד לי את התשובה בפורמט של קובץ PowerPoint להורדה.']},
+  {t:'"אל תנסה לרצות אותי"', ex:['מבקשים ביקורת אמיתית ולא הסכמה אוטומטית.']},
+  {t:'להימנע ממילות שלילה', ex:['נסחו מה כן לעשות במקום מה לא לעשות.']},
+  {t:'מודעות להגבלות ולטוקנים', ex:['שימו לב למגבלות החינם ולכמות הטוקנים כדי שהתשובה לא תיחתך.']},
+  {t:'אם התשובה נקטעה', ex:['כתבו "המשך" או לחצו על כפתור המשך היצירה.']},
+];
+
+/* ---------- TASKS (updated set) ---------- */
+const tasks = [
+  {icon:'telescope',title:'מחקר שוק והצלבת נתונים ב-Deep Research',
+   goal:'בניית דוח תחרותי או איתור מגמות גלובליות בנושא מקצועי רלוונטי.',
+   act:'הפעלת מחקר עומק עם פרומפט המכיל לפחות 3 ביטויי הגבלה (למשל: "רק מקורות אקדמיים", "רק מ-5 השנים האחרונות", "חפש גם באנגלית").',
+   ch:'עצירה בשלב תוכנית המחקר, עריכתה, מחיקת שאלות מיותרות והכוונה למאגר ספציפי (PubMed / דוחות ממשלה), ואז ייצוא ל-Google Docs.'},
+  {icon:'cog',title:'ניתוח אילוצים מורכב במצב חושב',
+   goal:'פתרון קונפליקט לוגי של תקציב, כוח אדם או לוחות זמנים.',
+   act:'מעבר למצב חושב (Reasoning) והזנת מקרה בוחן אמיתי מהמחלקה (מחסור ב-3 תקנים, הגבלת שעות נוספות, יעד שנדחה) עם 5 אילוצים נוקשים.',
+   ch:'הנחיית המודל לעבוד ב"שרשרת מחשבות", לפרק חלופות שלב-אחר-שלב ולהציג טבלת סיכונים מול סיכויים לכל פתרון.'},
+  {icon:'file-audio',title:'פרוטוקול קולי (MP3) למערך משימות וסגירת מעגל',
+   goal:'אוטומציה מלאה של ניהול ישיבות, הפצת עדכונים ומעקב ביצוע.',
+   act:'העלאת קובץ שמע של ישיבה בכפתור ה+, תמלול, חילוץ עיקרים והפקת טבלת משימות (משימה, אחראי, לו"ז).',
+   ch:'ייצוא הטבלה לטיוטת Gmail כמייל עדכון צוותי, ואז הפעלת @Tasks לפתיחת תזכורת אוטומטית ביומן למעקב ביצוע בשבוע הבא.'},
+  {icon:'shield-alert',title:'Custom Instructions לסימולציית "מבקר חיצוני"',
+   goal:'בחינת תוכניות עבודה רבעוניות מול ביקורת קשוחה.',
+   act:'הגדרת הנחיות אישיות קבועות בגלגל השיניים ההופכות את המודל למבקר/רואה חשבון/רגולטור: "אל תסכים איתי, חפש כשלים לוגיים, הצג קונטרה מבוססת עובדות ואל תחמיא לי".',
+   ch:'הזנת תוכנית עבודה אמיתית וניהול דיאלוג של 3 סבבים (פינג-פונג) לגילוי חורים אסטרטגיים, תורפות תקציביות וסיכונים שלא נלקחו בחשבון.'},
+  {icon:'at-sign',title:'אינטגרציה רב-ערוצית עם פקודות ה-@',
+   goal:'סנכרון מידע ארגוני מבוזר ללא העתק-הדבק.',
+   act:'הפעלת התוספים ושימוש משולב ב-@Gmail, @Docs ו-@Drive.',
+   ch:'ניתוח מסמך ארוך מהדרייב ב-@Docs, שליפת מייל עדכון אחרון מהספק ב-@Gmail, ויצירת סיכום מנהלים אינטגרטיבי המשווה ומצביע על פערים.'},
+  {icon:'palette',title:'מערך הדרכה מחלקתי אינטראקטיבי ב-Canvas',
+   goal:'הנגשת נהלים מורכבים או שינויים ארגוניים לצוות.',
+   act:'הזנת נוהל עבודה גולמי, יבש וארוך (בטיחות / שינוי טכנולוגי / קוד אתי) אל תוך Canvas.',
+   ch:'שימוש בכפתור "Create" להפיכת הנוהל לשני תוצרים: אינפוגרפיקה ויזואלית וחידון בן 10 שאלות לבדיקת הבנה והטמעה.'},
+  {icon:'phone-call',title:'סימולציית ניהול משבר קולית ב-Gemini Live',
+   goal:'תרגול "על יבש" של שיחות מנהלים רגישות (שימוע, קונפליקט, מו"מ מול ספק).',
+   act:'פתיחת אפליקציית Gemini בנייד והפעלת מצב שיחה קולית רציפה (Gemini Live).',
+   ch:'הנחיית המודל לשחק עובד ממורמר / ספק שמעלה מחיר ב-30%. ניהול דיאלוג קולי שוטף, תרגול התפרצות לניתוב השיחה, ובסיום בקשת משוב אנליטי על אסרטיביות, שכנוע ואמפתיה.'},
+];
+
+/* ---------- GLOSSARY ---------- */
+const glossary = [
+  {t:'קנטאור (Centaur)',d:'מודל עבודה של חצי אדם - חצי מכונה. ה-AI מעבד, האדם מחליט.'},
+  {t:'פרומפט (Prompt)',d:'הקלט - ההנחיה או השאלה שמזינים למודל. ככל שמפורט יותר, התוצר מדויק יותר.'},
+  {t:'ממ"א',d:'שיטת פרומפט: מי אני, מה אני רוצה, איזה מידע המודל צריך ממני.'},
+  {t:'תהליך איטרטיבי (פינג-פונג)',d:'ניהול שיחה בסבבים כדי לזקק את התוצר, כמו פסיכולוג שלומד את המטופל.'},
+  {t:'Few-Shot Prompting',d:'צירוף דוגמה (תמונה/טקסט) והנחיה למודל ליצור תוצר באותו סגנון ומבנה.'},
+  {t:'הזיות (Hallucinations)',d:'מצב שבו המודל ממציא עובדות בביטחון מלא. מחייב בדיקת מקורות.'},
+  {t:'הטיות (Bias)',d:'עיוותים בתשובות המודל הנובעים מהנתונים שעליהם אומן.'},
+  {t:'דיפ-פייק (Deepfake)',d:'מידול מלאכותי של קול, וידאו ותמונה - סכנת הונאות ומידע כוזב.'},
+  {t:'שרשרת מחשבות (Chain of Thought)',d:'מנגנון פנימי במצב חושב: פירוק הבעיה לשלבים לוגיים לפני מתן תשובה.'},
+  {t:'מצב חושב (Reasoning)',d:'מצב עיבוד איטי ומעמיק לבעיות לוגיות, מתמטיות וניתוחיות.'},
+  {t:'חלון הקשר (Context Window)',d:'כמות המידע שהמודל יכול להחזיק בזיכרון בבת אחת. חריגה חותכת טקסט.'},
+  {t:'טוקן (Token)',d:'יחידת המידע הבסיסית שבה המודל מודד ומעבד טקסט.'},
+  {t:'מחקר עומק (Deep Research)',d:'סריקה אקטיבית של האינטרנט: פתיחת עשרות קישורים והפקת דוח מגובה מקורות.'},
+  {t:'Canvas',d:'סביבת עריכה חיה דמוית Word שנפתחת לצד הצ׳אט להפיכת טקסט לאתר/חידון/אינפוגרפיקה.'},
+  {t:'Gems',d:'בוטים אישיים קבועים עם הנחיות הפעלה למשימות חוזרות.'},
+  {t:'זיכרון (Memory)',d:'רכיב שמייבא אוטומטית עובדות רלוונטיות מצ׳אטים קודמים לשיחה הנוכחית.'},
+  {t:'הנחיות אישיות (Custom Instructions)',d:'פרופיל וסגנון קבוע שחלים על כל השיחות העתידיות.'},
+  {t:'פקודות @',d:'חיבור ישיר לשירותי גוגל (Gmail, Docs, Calendar) לשליפה וסיכום. דורש הפעלת Extensions.'},
+  {t:'שיחה זמנית (Temporary Chat)',d:'שיחה שלא נשמרת בהיסטוריה, מיוצגת בעיפרון מקווקו - לעבודה מול מידע רגיש.'},
+  {t:'Gemini Live',d:'שיחה קולית רציפה בנייד - אפשר להתפרץ ולשנות כיוון תוך כדי.'},
+  {t:'Camera Vision',d:'ניתוח בזמן אמת דרך מצלמת הנייד: מכשיר, גרף או קוד שגיאה.'},
+  {t:'מודעות מסך (Screen Awareness)',d:'יכולת של Gemini לקרוא ולנתח את המסך הפעיל בנייד ולענות עליו.'},
+  {t:'"כבדהו וחשדהו"',d:'עיקרון עבודה: להשתמש במודל אבל תמיד לבדוק ולהצליב את מה שאמר.'},
+];
+
+/* ---------- SCREENSHOTS with numbered markers ---------- */
+const shots = [
+  {f:'מסך ראשי.png',t:'המסך הראשי',d:'סרגל צידי מימין, תיבת פרומפט במרכז, פרופיל והגדרות למטה.',markers:[
+    {x:2.3,y:5.9,label:'שיחה זמנית',d:'העיפרון המקווקו פותח שיחה שלא נשמרת בהיסטוריה ולא נלמדת על ידי המודל. השתמשו בה בכל פעם שאתם עובדים מול מידע רגיש, פרטי מטופלים או נהלים מסווגים - וכך שומרים על סודיות.'},
+    {x:94.3,y:13.1,label:'שיחה חדשה',d:'פותח חלון צ\'אט נקי. פתחו שיחה חדשה לכל נושא נפרד כדי למנוע "זליגת הקשרים" - ערבוב נושאים שמבלבל את המודל ופוגע באיכות התשובות ובזיכרון של השיחה.'},
+    {x:93.5,y:18.9,label:'חיפוש בצ\'אטים',d:'שורת חיפוש שסורקת את כל היסטוריית השיחות לפי מילות מפתח. חוסכת גלילה ידנית כשצריך למצוא תשובה או אסמכתא מלפני שבועות.'},
+    {x:93.2,y:23.7,label:'ספרייה',d:'ריכוז התכנים והתוצרים שיצרתם (כמו תמונות שנוצרו) במקום אחד לגישה מהירה בלי לחפש בין השיחות.'},
+    {x:15.5,y:49.4,label:'מיקרופון',d:'הזנת פרומפט בדיבור חופשי במקום הקלדה. זיהוי הדיבור מדויק בעברית וכולל מונחים מקצועיים - נוח לסיעור מוחות ארוך או כשהידיים תפוסות.'},
+    {x:20.5,y:49.4,label:'בורר מודל',d:'בחירה בין דגמי המודל: Flash מהיר לשימוש יומיומי, Pro חזק יותר למשימות מורכבות. בוחרים לפי כובד המשימה - ככל שהמשימה כבדה יותר, כדאי דגם חזק יותר.'},
+    {x:51,y:49.4,label:'תיבת הפרומפט',d:'כאן כותבים את הבקשה. ככל שרמת הפירוט וההקשר גבוהה יותר, כך התוצר מדויק יותר - בדיוק כמו הזמנת קפה מפורטת מול "סתם קפה".'},
+    {x:62.2,y:49.4,label:'כפתור +',d:'פותח תפריט העלאת קבצים ומדיה: מסמכים, תמונות, אודיו, ייבוא מ-Drive, יצירת תמונה, Canvas ומחקר עומק.'},
+    {x:7.8,y:84.3,label:'מצב חשיבה: רגיל / מורחב',d:'מעבר בין "רגיל" (תשובה מהירה וזורמת, מצוין ליצירתיות) ל"מורחב/חושב" (פירוק לוגי איטי ומעמיק - למתמטיקה, ניתוח דוחות והשוואת חלופות).'},
+    {x:79.4,y:92.5,label:'הגדרות (גלגל שיניים)',d:'פותח את מרכז ניהול החשבון: הנחיות אישיות, ניהול זיכרון, תוספים (Extensions), עיצוב ו-Gems.'},
+    {x:97.8,y:92.5,label:'פרופיל והחלפת משתמש',d:'לחיצה על שם המשתמש מאפשרת מעבר מהיר בין חשבון גוגל פרטי לארגוני בלי להתנתק מהדפדפן, וכן שינוי שפת הממשק ומצב כהה/בהיר.'},
+  ]},
+  {f:'לחיצה על +.png',t:'כפתור ה + - העלאת קבצים ומדיה',d:'התפריט שנפתח בלחיצה על ה+.',markers:[
+    {x:62,y:49.6,label:'כפתור הסגירה',d:'ה+ הופך ל-X כשהתפריט פתוח. לחיצה נוספת סוגרת את התפריט וחוזרת לתיבת הכתיבה.'},
+    {x:54.7,y:58,label:'העלאת קבצים',d:'העלאת מסמכים מהמחשב - Word, PDF, Excel ותמונות - כדי שהמודל ינתח, יסכם או יצליב מולם מידע. אפשר גם להעלות אודיו (MP3/WAV) לתמלול וסיכום פגישות.'},
+    {x:54.7,y:64,label:'הוספה מ-Drive',d:'גישה ישירה לגוגל דרייב האישי או הארגוני - שליפת קבצים בלי להוריד אותם קודם למחשב.'},
+    {x:54.7,y:69.8,label:'עוד העלאות',d:'אפשרויות העלאה נוספות. שימו לב: קבצי אודיו ארוכים דורשים חלון הקשר רחב, וחריגה עלולה לחתוך את הטקסט.'},
+    {x:54.7,y:78.5,label:'יצירת תמונה',d:'הפעלת מנוע יצירת התמונות מתיאור טקסטואלי חופשי. התג "חדש" מסמן פיצ\'ר עדכני.'},
+    {x:56.3,y:84.4,label:'Canvas',d:'פתיחת סביבת עריכה חיה דמוית Word לצד הצ\'אט - לעריכת טקסט ארוך והפיכתו בלחיצה לאתר, אינפוגרפיקה, חידון או פודקאסט.'},
+    {x:55.5,y:90.3,label:'Deep Research',d:'הפעלת מצב מחקר עומק - המודל סורק אקטיבית עשרות מקורות ברשת, משווה נתונים ומפיק דוח מגובה במקורות.'},
+  ]},
+  {f:'מחקר עומק.png',t:'מחקר עומק (Deep Research)',d:'מצב מחקר עומק פעיל בתיבת הפרומפט.',markers:[
+    {x:54.7,y:43,label:'"מה היית רוצה לחקור?"',d:'שדה ייעודי למחקר. נסחו את שאלת המחקר בהרחבה והוסיפו ביטויי הגבלה (כמו "רק מקורות אקדמיים" או "רק מ-5 השנים האחרונות") כדי לשלוט באיכות התוצאה.'},
+    {x:24.5,y:49.2,label:'בורר מצב מורחב',d:'בחירת עומק החשיבה של המודל גם בזמן מחקר עומק.'},
+    {x:18.8,y:49.2,label:'מיקרופון',d:'הכתבת שאלת המחקר בדיבור חופשי במקום הקלדה.'},
+    {x:54.7,y:49.4,label:'תגית Deep Research פעילה',d:'מסמנת שמצב מחקר העומק דלוק. לחיצה על ה-X שלצידה מכבה את המצב וחוזרים לצ\'אט רגיל.'},
+    {x:28.3,y:56.8,label:'קבצים',d:'העלאת מסמך או תמונה משלכם שישמשו מקור בסיס למחקר - המודל יחקור סביבם ולא רק ברשת הפתוחה.'},
+    {x:51,y:56.8,label:'מקורות',d:'בחירה והכוונה של המאגרים שמהם המודל ישלוף מידע - כאן מפעילים את המנוף הגדול ביותר על איכות הדוח.'},
+  ]},
+  {f:'אופציות בשיחה .png',t:'אופציות ושיתוף התשובה',d:'תפריט הייצוא וכפתורי התגובה מתחת לתשובה.',markers:[
+    {x:52.9,y:3.5,label:'פיצול לשיחה חדשה',d:'העברת נקודת השיחה הנוכחית לצ\'אט חדש ונקי, כדי להמשיך נושא מסוים בלי לגרור את כל ההקשר הקודם.'},
+    {x:52.8,y:9.3,label:'האזנה',d:'הקראה קולית של התשובה - נוח להאזנה תוך כדי עבודה אחרת או לבדיקת ניסוח.'},
+    {x:52.6,y:15.2,label:'ייצוא ל-Google Docs',d:'יצירת מסמך Docs מעוצב ב-Drive עם הטקסט והטבלאות, בלי "העתק-הדבק" שמשבש עברית ופיסוק. השרשרת המומלצת למחקר: מחקר עומק ‹ Docs ‹ Word/PDF.'},
+    {x:51.6,y:21.2,label:'יצירת טיוטה ב-Gmail',d:'פותח מייל חדש עם התוכן מוטמע כטיוטה מוכנה לעריכה ולשליחה - מצוין להפצת סיכום צוותי.'},
+    {x:51.3,y:30,label:'ייצוא לקוד',d:'ייצוא ישיר של קוד לסביבות פיתוח כמו Colab או Replit (רלוונטי למשימות תכנות).'},
+    {x:51.6,y:39.5,label:'דיווח על בעיה משפטית',d:'דיווח לגוגל על תוכן בעייתי מבחינת זכויות יוצרים או היבט משפטי.'},
+    {x:51.3,y:45.6,label:'הצגת פרטי התשובה',d:'מידע נוסף על אופן יצירת התשובה והמקורות שמאחוריה.'},
+    {x:61.5,y:49.2,label:'כפתורי תגובה',d:'העתקה נקייה של התשובה (עם שמירת בולטים וטבלאות), ולייק/דיסלייק לדירוג ולשיפור איכות המודל.'},
+    {x:24.5,y:84.6,label:'בורר מצב מורחב',d:'החלפת מצב החשיבה של המודל עבור השיחה הזו.'},
+  ]},
+  {f:'עריכת הבקשה.png',t:'עריכת הבקשה ששלחתם',d:'הכפתורים שמופיעים מתחת לפרומפט שלכם.',markers:[
+    {x:23.2,y:15.6,label:'בועת הפרומפט',d:'ההודעה ששלחתם למודל. במעבר עכבר עליה נחשפים כפתורי עריכה והעתקה.'},
+    {x:16.5,y:23.8,label:'עיפרון עריכה',d:'עריכת הבקשה המקורית ושליחתה מחדש. עדיף על כתיבת הודעה חדשה - הפעולה מוחקת את התשובה הישנה ומדייקת מאותה נקודה בלי לזהם את השיחה בהקשרים מיותרים.'},
+    {x:19,y:23.8,label:'העתקת הפרומפט',d:'העתקת נוסח הבקשה שכתבתם לשימוש חוזר בשיחה אחרת.'},
+    {x:89.3,y:72,label:'הצ\'אט המודגש',d:'השיחה הפעילה מודגשת ברשימת ההיסטוריה בצד, כדי שתדעו איפה אתם נמצאים.'},
+  ]},
+  {f:'הגדרות.png',t:'תפריט ההגדרות (גלגל השיניים)',d:'מרכז ניהול החשבון.',markers:[
+    {x:75,y:11.6,label:'פעילות',d:'צפייה וניהול של היסטוריית הפעילות שלכם במערכת.'},
+    {x:74,y:17.7,label:'AI מותאם אישית',d:'מרכז ההתאמה האישית - זיכרון, אפליקציות מקושרות והנחיות בסיס קבועות שמעצבות איך המודל עונה לכם בכל השיחות.'},
+    {x:72.9,y:23.7,label:'ייבוא זיכרון ל-Gemini',d:'העלאת עובדות והקשר שהמודל יזכור עליכם לאורך זמן.'},
+    {x:72.9,y:29.7,label:'מכסות שימוש',d:'מעקב אחר כמות השימוש והמכסות בחשבון.'},
+    {x:75,y:35.7,label:'Gems',d:'ניהול בוטים אישיים - עוזרי AI קבועים עם הנחיות מובנות למשימות חוזרות (כמו "כותב פוסטים שיווקיים").'},
+    {x:70.8,y:41.7,label:'קישורים שגלויים לכולם',d:'ניהול השיחות ששיתפתם בקישור ציבורי.'},
+    {x:75,y:47.7,label:'עיצוב',d:'החלפת מראה המערכת - מצב כהה או בהיר.'},
+    {x:73.4,y:59.7,label:'NotebookLM',d:'מעבר לכלי NotebookLM שעובד בלולאה סגורה רק על הקבצים שלכם (יורחב בשיעור הבא).'},
+    {x:74,y:65.7,label:'שליחת משוב',d:'דיווח על תקלות או הצעות שיפור לגוגל.'},
+    {x:75,y:71.7,label:'עזרה',d:'מרכז העזרה והתמיכה.'},
+    {x:79.4,y:94.4,label:'גלגל השיניים',d:'האייקון שפותח את כל התפריט הזה - נמצא ליד הפרופיל בפינה התחתונה.'},
+  ]},
+  {f:'AI מותאם אישית.png',t:'AI מותאם אישית',d:'הגדרות התאמה אישית של המודל אליכם.',markers:[
+    {x:17.2,y:25.9,label:'מתג הזיכרון',d:'מתג הפעלה/כיבוי של הזיכרון. כשהוא דולק, המודל לומד מהשיחות הקודמות ומייבא עובדות רלוונטיות אוטומטית לשיחה חדשה.'},
+    {x:50,y:33,label:'זיכרון',d:'Gemini לומד מהשיחות הקודמות כדי להבין אתכם טוב יותר. תמיד אפשר לצפות ברשימת מה שנשמר עליכם, לנהל ולמחוק.'},
+    {x:50,y:60.2,label:'אפליקציות מקושרות',d:'חיבור אפליקציות (כמו שירותי גוגל) שהמודל יכול להשתמש בהן כדי לבצע לכם יותר משימות ישירות מהצ\'אט.'},
+    {x:50,y:87.7,label:'הנחיות בסיס ל-Gemini',d:'הגדרת סגנון והנחיות קבועות שיחולו על כל השיחות - למשל חובת מקורות, פיסוק קפדני או איסור מחמאות ומטא-שיחה.'},
+  ]},
+  {f:'GEM.png',t:'מנהל ה-Gems',d:'בוטים אישיים למשימות חוזרות.',markers:[
+    {x:63.5,y:22.5,label:'מנהל ה-Gems',d:'המסך לניהול הבוטים האישיים שלכם ושל התבניות המובנות של Google.'},
+    {x:14,y:31,label:'החלפת תצוגה',d:'שינוי אופן הצגת רשימת ה-Gems / הצגת יותר תוכן במסך.'},
+    {x:12.1,y:39,label:'תפריט 3 נקודות',d:'אפשרויות על כרטיס Gem - עריכה, נעיצה או מחיקה.'},
+    {x:46.9,y:48.4,label:'Gems מובנים של Google',d:'בוטים מוכנים מראש (מהנדס תוכנה, יועץ קריירה, מעורר השראה ועוד) שאפשר להשתמש בהם מיד בלי להגדיר.'},
+    {x:15,y:67.5,label:'חדש Gem +',d:'יצירת בוט משלכם: נותנים לו שם, אייקון והנחיות הפעלה קבועות - וכך לא צריך להסביר לו מחדש בכל פעם.'},
+  ]},
+];
+
+/* ---------- RENDER ---------- */
+const techGrid=document.getElementById('techGrid');
+techniques.forEach((tc,i)=>{
+  const d=document.createElement('div');
+  d.className='glass rounded-xl p-4 glass-hover reveal';
+  d.innerHTML=`<div class="flex items-start gap-2 mb-2"><span class="num text-indigo-500 font-bold">${String(i+1).padStart(2,'0')}</span><b class="text-[15px]">${tc.t}</b></div>`+
+    tc.ex.map(e=>`<div class="example p-2.5 mt-1.5 text-[13px]">${e}</div>`).join('');
+  techGrid.appendChild(d);
+});
+
+const taskList=document.getElementById('taskList');
+const saved=JSON.parse(localStorage.getItem('lesson1_tasks_v2')||'{}');
+tasks.forEach((tk,i)=>{
+  const done=saved[i];
+  const el=document.createElement('label');
+  el.className='glass glass-hover rounded-2xl p-5 flex gap-4 items-start reveal cursor-pointer '+(done?'task-done':'');
+  el.innerHTML=`
+    <input type="checkbox" data-i="${i}" ${done?'checked':''}>
+    <div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center flex-none"><i data-lucide="${tk.icon}" class="w-6 h-6"></i></div>
+    <div class="flex-1">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-xs chip px-2 py-0.5 rounded-full">משימה ${i+1}</span>
+        <h3 class="font-bold text-lg tasklabel">${tk.title}</h3>
+      </div>
+      <div class="text-sm text-slate-600 space-y-1.5 tasklabel">
+        <p><b class="text-indigo-700">המטרה:</b> ${tk.goal}</p>
+        <p><b class="text-indigo-700">הפעולה:</b> ${tk.act}</p>
+        <p><b class="text-purple-700">האתגר הניהולי:</b> ${tk.ch}</p>
+      </div>
+    </div>`;
+  taskList.appendChild(el);
+});
+function updateProgress(){
+  const boxes=[...document.querySelectorAll('#taskList input')];
+  const done=boxes.filter(b=>b.checked).length;
+  const pct=Math.round(done/boxes.length*100);
+  document.getElementById('progress').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`${done} מתוך ${boxes.length} משימות הושלמו · ${pct}%`;
+}
+taskList.addEventListener('change',e=>{
+  if(e.target.type!=='checkbox')return;
+  saved[e.target.dataset.i]=e.target.checked;
+  localStorage.setItem('lesson1_tasks_v2',JSON.stringify(saved));
+  e.target.closest('label').classList.toggle('task-done',e.target.checked);
+  updateProgress();
+});
+
+const grid=document.getElementById('glossaryGrid');
+glossary.forEach(g=>{
+  const d=document.createElement('div');
+  d.className='glass glass-hover rounded-xl p-4 gloss-item';
+  d.innerHTML=`<h4 class="font-bold text-indigo-700 mb-1">${g.t}</h4><p class="text-sm text-slate-600 leading-relaxed">${g.d}</p>`;
+  grid.appendChild(d);
+});
+document.getElementById('glossarySearch').addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();let any=false;
+  document.querySelectorAll('.gloss-item').forEach(it=>{
+    const m=it.textContent.toLowerCase().includes(q);it.style.display=m?'':'none';if(m)any=true;});
+  document.getElementById('noResults').classList.toggle('hidden',any);
+});
+
+/* screenshots - small dots + on-image popup */
+const gal=document.getElementById('galleryGrid');
+shots.forEach((s,si)=>{
+  const src=encodeURI('צילומי מסך/'+s.f);
+  const wrap=document.createElement('div');
+  wrap.className='glass rounded-2xl p-4 md:p-6 reveal mb-8';
+  const dotsHtml=s.markers.map((m,i)=>`<button class="ss-dot" data-si="${si}" data-i="${i}" style="left:${m.x}%;top:${m.y}%;--d:${(i*0.13).toFixed(2)}s;animation-delay:${(i*0.05).toFixed(2)}s" aria-label="${m.label}"></button>`).join('');
+  wrap.innerHTML=`
+    <h3 class="font-bold text-xl mb-1">${s.t}</h3>
+    <p class="text-sm text-slate-500 mb-3">${s.d}</p>
+    <div class="ss-imgwrap" data-si="${si}">
+      <img src="${src}" alt="${s.t}" loading="lazy">
+      ${dotsHtml}
+      <div class="ss-pop"></div>
+    </div>
+    <div class="ss-toolbar">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ss-toggle ss-btn" data-si="${si}"><span>👁 הסתר נקודות</span></button>
+        <button class="ss-zoom ss-btn" data-si="${si}">🔍 הגדל תמונה</button>
+      </div>
+      <span class="ss-hint">לחצו על נקודה כדי לראות הסבר על מה שהיא מסמנת</span>
+    </div>`;
+  gal.appendChild(wrap);
+});
+function closePop(wrap){if(!wrap)return;const p=wrap.querySelector('.ss-pop');if(p)p.classList.remove('on');wrap.querySelectorAll('.ss-dot.active').forEach(d=>d.classList.remove('active'));}
+function closeAllPops(){gal.querySelectorAll('.ss-imgwrap').forEach(closePop);}
+function openPop(wrap,dot,m){
+  const pop=wrap.querySelector('.ss-pop');
+  pop.innerHTML=`<button class="ss-pop-x" aria-label="סגור">×</button><b>${m.label}</b><span>${m.d}</span>`;
+  pop.classList.add('on');
+  const wr=wrap.getBoundingClientRect(),dr=dot.getBoundingClientRect();
+  const cx=dr.left+dr.width/2-wr.left, cy=dr.top+dr.height/2-wr.top;
+  const pw=pop.offsetWidth, ph=pop.offsetHeight;
+  let left=Math.max(8,Math.min(cx-pw/2, wr.width-pw-8));
+  let top=cy < wr.height/2 ? cy+16 : cy-ph-16;
+  top=Math.max(8,Math.min(top, wr.height-ph-8));
+  pop.style.left=left+'px'; pop.style.top=top+'px';
+}
+gal.addEventListener('click',e=>{
+  const tgl=e.target.closest('.ss-toggle');
+  if(tgl){const wrap=gal.querySelectorAll('.ss-imgwrap')[tgl.dataset.si];const hidden=wrap.classList.toggle('hide-markers');
+    tgl.querySelector('span').textContent=hidden?'👁 הצג נקודות':'👁 הסתר נקודות';if(hidden)closePop(wrap);return;}
+  const zoom=e.target.closest('.ss-zoom');
+  if(zoom){const img=gal.querySelectorAll('.ss-imgwrap')[zoom.dataset.si].querySelector('img');openLightbox(img.src,img.alt);return;}
+  const x=e.target.closest('.ss-pop-x');
+  if(x){closePop(x.closest('.ss-imgwrap'));return;}
+  const dot=e.target.closest('.ss-dot');
+  if(dot){const wrap=dot.closest('.ss-imgwrap');const already=dot.classList.contains('active');
+    closePop(wrap);if(!already){dot.classList.add('active');openPop(wrap,dot,shots[+dot.dataset.si].markers[+dot.dataset.i]);}return;}
+  const w=e.target.closest('.ss-imgwrap');
+  if(w){if(!e.target.closest('.ss-pop'))closePop(w);return;}
+});
+addEventListener('resize',closeAllPops,{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllPops();});
+
+const lb=document.getElementById('lightbox'),lbi=document.getElementById('lightboxImg');
+function openLightbox(src,alt){lbi.src=src;lbi.alt=alt;lb.classList.add('on');}
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on');});
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const sb=document.getElementById('scrollbar');
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;sb.style.width=p+'%';},{passive:true});
+
+lucide.createIcons();
+updateProgress();
+</script>
+</body>
+</html>
