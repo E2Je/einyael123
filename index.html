@@ -42,6 +42,21 @@
     background:linear-gradient(90deg,#6366f1,#a855f7);transition:.28s;border-radius:2px}
   .nav-link:hover::after{width:100%}
 
+  /* lesson switcher: landing page + per-lesson content blocks */
+  #landing{display:none}
+  body[data-lesson="0"] #landing{display:block}
+  .lesson-block{display:none}
+  body[data-lesson="1"] .lesson-block.l1{display:block}
+  body[data-lesson="2"] .lesson-block.l2{display:block}
+  .nav-links{display:none}
+  body[data-lesson="1"] .nav-links.l1{display:flex}
+  body[data-lesson="2"] .nav-links.l2{display:flex}
+  .lesson-pill{font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:999px;
+    border:1px solid rgba(99,102,241,.28);color:#5145cd;background:rgba(99,102,241,.08);
+    cursor:pointer;transition:.25s;white-space:nowrap}
+  .lesson-pill:hover{background:rgba(99,102,241,.16)}
+  .lesson-pill.active{background:linear-gradient(135deg,#6366f1,#a855f7);color:#fff;border-color:transparent}
+
   .reveal{opacity:0;transform:translateY(30px);transition:.75s cubic-bezier(.2,.8,.2,1)}
   .reveal.in{opacity:1;transform:none}
   .reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}
@@ -126,9 +141,13 @@
 
 <!-- NAV -->
 <header class="fixed top-0 inset-x-0 z-50 glass">
-  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
-    <a href="#top" class="font-black text-sm md:text-lg tracking-tight grad-text shrink-0">בינה מלאכותית · שיעור 1</a>
-    <div class="flex items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
+  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="#" onclick="setLesson('0');return false;" class="font-black text-sm md:text-lg tracking-tight grad-text shrink-0">בינה מלאכותית · עין יעל</a>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <button class="lesson-pill" data-lesson-btn="1" onclick="setLesson('1')">שיעור 1</button>
+      <button class="lesson-pill" data-lesson-btn="2" onclick="setLesson('2')">שיעור 2</button>
+    </div>
+    <div class="nav-links l1 items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
       <a href="#screens" class="nav-link">צילומים</a>
       <a href="#interface" class="nav-link">ממשק</a>
       <a href="#summary" class="nav-link">סיכום</a>
@@ -137,10 +156,46 @@
       <a href="#features" class="nav-link">כלים</a>
       <a href="#glossary" class="nav-link">מילון</a>
     </div>
+    <div class="nav-links l2 items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
+      <a href="#screens2" class="nav-link">צילומים</a>
+      <a href="#interface2" class="nav-link">ממשק</a>
+      <a href="#chatgpt2" class="nav-link">ChatGPT</a>
+      <a href="#notebooklm2" class="nav-link">NotebookLM</a>
+      <a href="#glossary2" class="nav-link">מילון</a>
+    </div>
     <span class="chip text-xs px-3 py-1 rounded-full shrink-0 hidden sm:inline-block">עין יעל</span>
   </nav>
 </header>
 
+<!-- LANDING -->
+<section id="landing" class="relative z-10 max-w-5xl mx-auto px-5 pt-36 pb-16 text-center">
+  <div class="chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 float-in">
+    <i data-lucide="sparkles" class="w-4 h-4"></i> מדריכים פרקטיים · מפגשי עין יעל
+  </div>
+  <h1 class="text-4xl md:text-6xl font-black leading-tight float-in" style="animation-delay:.1s">
+    בינה מלאכותית<br><span class="grad-text">וחשיבה יצירתית</span>
+  </h1>
+  <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto float-in" style="animation-delay:.2s">
+    בחרו שיעור כדי להתחיל. כל שיעור כולל צילומי מסך מוסברים, מדריך ממשק, סיכום ודוגמאות לפרומפטים.
+  </p>
+  <p class="mt-3 text-sm text-indigo-500 font-medium float-in" style="animation-delay:.3s">הכלים עלינו · היצירתיות עליכם</p>
+  <div class="grid sm:grid-cols-2 gap-6 mt-11">
+    <button onclick="setLesson('1')" class="glass glass-hover rounded-3xl p-8 text-right float-in" style="animation-delay:.35s">
+      <div class="icon-badge w-14 h-14 rounded-2xl chip grid place-items-center mb-4"><i data-lucide="sparkles" class="w-7 h-7"></i></div>
+      <h2 class="font-black text-2xl mb-2">שיעור 1</h2>
+      <p class="text-sm text-slate-500 leading-relaxed mb-5">מבוא ל-AI, הכרות עם ממשק Gemini, שיטות ודוגמאות לפרומפטים ומחקר עומק.</p>
+      <span class="text-indigo-600 font-bold text-sm inline-flex items-center gap-1.5">כניסה לשיעור <i data-lucide="arrow-left" class="w-4 h-4"></i></span>
+    </button>
+    <button onclick="setLesson('2')" class="glass glass-hover rounded-3xl p-8 text-right float-in" style="animation-delay:.45s">
+      <div class="icon-badge w-14 h-14 rounded-2xl chip grid place-items-center mb-4"><i data-lucide="notebook-text" class="w-7 h-7"></i></div>
+      <h2 class="font-black text-2xl mb-2">שיעור 2</h2>
+      <p class="text-sm text-slate-500 leading-relaxed mb-5">היכרות עם ChatGPT, תרגיל השוואה מול Gemini, Canvas ו-NotebookLM.</p>
+      <span class="text-indigo-600 font-bold text-sm inline-flex items-center gap-1.5">כניסה לשיעור <i data-lucide="arrow-left" class="w-4 h-4"></i></span>
+    </button>
+  </div>
+</section>
+
+<div class="lesson-block l1">
 <!-- HERO -->
 <section id="top" class="relative z-10 max-w-6xl mx-auto px-5 pt-32 pb-14 text-center">
   <div class="chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 float-in">
@@ -460,9 +515,187 @@
   <div id="glossaryGrid" class="grid md:grid-cols-2 gap-3"></div>
   <p id="noResults" class="hidden text-center text-slate-400 py-8">לא נמצא מונח תואם.</p>
 </section>
+</div><!-- /lesson-block l1 -->
+
+<div class="lesson-block l2">
+<!-- HERO 2 -->
+<section id="top2" class="relative z-10 max-w-6xl mx-auto px-5 pt-32 pb-14 text-center">
+  <div class="chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 float-in">
+    <i data-lucide="sparkles" class="w-4 h-4"></i> מדריך פרקטי · מבוסס על סיכום השיעור השני
+  </div>
+  <h1 class="text-4xl md:text-6xl font-black leading-tight float-in" style="animation-delay:.1s">
+    ChatGPT<br><span class="grad-text">Canvas ו-NotebookLM</span>
+  </h1>
+  <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto float-in" style="animation-delay:.2s">
+    היכרות עם ChatGPT מול Gemini, ובעיקר NotebookLM - איך בונים מאגר ידע סגור וסגור-מקורות
+    ומוציאים ממנו פודקאסט, מצגת, אינפוגרפיקה, בוחן ומפת חשיבה.
+  </p>
+  <p class="mt-3 text-sm text-indigo-500 font-medium float-in" style="animation-delay:.3s">הכלים עלינו · היצירתיות עליכם</p>
+  <div class="mt-9 flex flex-wrap gap-3 justify-center float-in" style="animation-delay:.4s">
+    <a href="#screens2" class="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-l from-indigo-500 to-purple-500 hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-indigo-300/50">
+      <i data-lucide="image" class="w-5 h-5"></i> צילומי מסך מוסברים
+    </a>
+    <a href="#notebooklm2" class="px-6 py-3 rounded-xl font-bold glass glass-hover text-indigo-700">NotebookLM</a>
+  </div>
+</section>
+
+<!-- SCREENSHOTS 2 -->
+<section id="screens2" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">צילומי מסך מוסברים</h2>
+    <p class="text-slate-500 mt-2 mb-2">לחצו על נקודה כדי לראות הסבר על מה שהיא מסמנת. הנקודות ממוקמות לצד הרכיבים כדי לא להסתיר אותם.</p>
+    <p class="text-xs text-slate-400 mb-8">כפתור "הגדל תמונה" לצפייה מלאה · "הסתר נקודות" למראה נקי.</p>
+  </div>
+  <div id="galleryGrid2"></div>
+  <p id="shots2Empty" class="text-center text-slate-400 py-10 glass rounded-2xl hidden">צילומי המסך של שיעור 2 (NotebookLM ו-Canvas) יתווספו בקרוב.</p>
+</section>
+
+<!-- INTERFACE 2 -->
+<section id="interface2" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מדריך ממשק ChatGPT ו-NotebookLM</h2>
+    <p class="text-slate-500 mt-2 mb-8">מה דומה לג'מיני, מה שונה, ואיך מתמצאים במחברת של NotebookLM.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="panel-right" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">ChatGPT - הסרגל הצידי</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>💬 <b>צ'אט חדש</b> וחיפוש בשיחות - אותו עיקרון כמו בג'מיני.</li>
+        <li>🗂️ <b>Projects</b> - תיקיית שיחות עם קבצים והנחיות משותפות, דומה לתיקיות ב-Gemini אך עם זיכרון קבוע לכל השיחות בפרויקט.</li>
+        <li>🖼️ <b>ספרייה (Library)</b> - כל התמונות והתוצרים שנוצרו, במקום אחד.</li>
+        <li>🔌 <b>Connectors / Plugins</b> - חיבור לגוגל דרייב, Canva ועוד. מאז השיעור נוסף חיבור חי לתיקיית Drive - כל עדכון בקובץ בדרייב מתעדכן אוטומטית ב-ChatGPT, בלי להעלות מחדש.</li>
+        <li>🤖 <b>בורר מודל אוטומטי</b> - ChatGPT בוחר בעצמו בין תשובה מהירה לחשיבה מעמיקה (Thinking) לפי מורכבות השאלה, אבל אפשר גם לבחור ידנית.</li>
+      </ul>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="wrench" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">כפתורי התשובה ב-ChatGPT</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>📄 <b>הצג מקורות</b> - כשמופעל חיפוש באינטרנט, אפשר לראות בדיוק מאיזה אתר הובא כל משפט.</li>
+        <li>🧠 <b>הצגת שלבי חשיבה</b> - חושפת את "שרשרת המחשבות" הפנימית לפני מתן התשובה.</li>
+        <li>📤 <b>ייצוא</b> - שליחה ישירה ל-Google Docs או פתיחת טיוטת Gmail, בדיוק כמו בג'מיני.</li>
+        <li>✏️ <b>עריכה מקומית</b> - סימון קטע בתוך התשובה עצמה ובקשת שינוי רק עליו, בלי לגעת בשאר הטקסט.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 mt-6 reveal">
+    <div class="flex items-center gap-3 mb-4"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="notebook-text" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">מבנה מחברת ב-NotebookLM</h3></div>
+    <div class="grid sm:grid-cols-3 gap-4 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">מקורות (שמאל)</b><p class="text-slate-600 mt-1 leading-relaxed">רשימת כל הקבצים/אתרים/סרטונים שהעליתם. אפשר לסמן וי/איקס ליד כל מקור כדי לצמצם זמנית על מה המודל עונה.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">צ'אט (מרכז)</b><p class="text-slate-600 mt-1 leading-relaxed">כאן שואלים שאלות. כל תשובה מגיעה עם מספר ציטוט שמצביע בדיוק על המקור שממנו הובא המידע - לוחצים ורואים את הציטוט המקורי.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">Studio (ימין)</b><p class="text-slate-600 mt-1 leading-relaxed">פאנל הפלטים: פודקאסט, סרטון, מצגת, אינפוגרפיקה, בוחן, כרטיסיות, מפת חשיבה ודוח. מפורט בהמשך.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT 2 -->
+<section class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal mb-8">
+    <p class="text-sm text-slate-500 leading-relaxed">
+      בשיעור הקודם עברנו על ממשק Gemini, שיטת ממ"א ורשימת טכניקות הפרומפט המלאה (עדיין רלוונטית במלואה - ראו
+      <button onclick="setLesson('1');setTimeout(()=>location.hash='#prompting',30)" class="text-indigo-600 underline font-medium">שיעור 1 ‹ פרומפטים</button>).
+      הפעם עברנו לכלי נוסף - ChatGPT - ולכלי המרכזי של השיעור: NotebookLM.
+    </p>
+  </div>
+
+  <div id="chatgpt2" class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="message-square-text" class="icon-badge w-6 h-6 text-emerald-500"></i><h3 class="font-bold text-lg">היכרות עם ChatGPT</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-3">
+      ChatGPT (של OpenAI, בכתובת chatgpt.com בלבד - לא כל אתר "צ'אט בוט" אחר) עובד על אותם עקרונות פרומפט שכבר
+      למדנו ב-Gemini. הכתיבה מרגישה לפעמים "חדה" יותר ופחות מרוצה-עצמית, ובקבצי טקסט ומסמכים מנוסחים
+      (מכתבים, מיילים) הפער בסגנון בין הכלים בולט. אין "טוב ורע" - יש כלים שמתאימים יותר למשימות מסוימות,
+      ומומלץ לשלב ביניהם (״כלים שלובים״): לפתח רעיון בכלי אחד ולהעביר את התוצר לכלי השני לשיפור או להשוואה.
+    </p>
+    <p class="text-sm text-slate-600 leading-relaxed">
+      כדי להשתמש בכלים המחוברים (Connectors) - דרייב, Canva ועוד - יש להתחבר אליהם מראש דרך תפריט התוספים ליד
+      כפתור ה+. ברוב הכלים נדרשת הרשמה מלאה (לא רק כניסת אורח) כדי לקבל את המודלים המתקדמים וזיכרון שיחות.
+    </p>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="scale" class="icon-badge w-6 h-6 text-amber-500"></i><h3 class="font-bold text-lg">תרגיל: השוואה בין Gemini ל-ChatGPT</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-3">
+      קחו פרומפט או תוצר שכבר יצרתם ב-Gemini (מכתב, סיכום, רעיון) והריצו בדיוק את אותה בקשה ב-ChatGPT. השוו: סגנון
+      הכתיבה, אורך התשובה, והאם אחד מהם "התאים" יותר למה שרציתם. טיפ מרכזי: כשאתם מציגים למודל תוצר של כלי אחר
+      ומבקשים חוות דעת עליו, אל תגלו לו איזה כלי יצר אותו ואל תרמזו איזו תשובה "טובה יותר" בעיניכם - כדי לקבל
+      ביקורת אמיתית ולא כזו שמנסה להתאים את עצמה לדעה שכבר גיליתם.
+    </p>
+  </div>
+</section>
+
+<!-- NOTEBOOKLM 2 -->
+<section id="notebooklm2" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <span class="chip inline-block text-xs px-3 py-1 rounded-full mb-3">הלב של השיעור</span>
+    <h2 class="grad-text text-3xl md:text-4xl font-black">NotebookLM</h2>
+    <p class="text-slate-500 mt-2 mb-8">מאגר ידע סגור, שעונה רק על סמך המקורות שהעליתם - עם ציטוט מדויק לכל תשובה.</p>
+  </div>
+
+  <div class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="library" class="icon-badge w-6 h-6 text-indigo-500"></i><h3 class="font-bold text-lg">מהו NotebookLM ולמה זה שונה מצ'אט רגיל</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed">
+      בצ'אט רגיל המודל שואב מכל הידע הכללי שלו ברשת - וזה בדיוק הבעיה כשרוצים תשובה ממוקדת. NotebookLM הופך את
+      המודל ל"מומחה" שעונה רק מתוך מאגר סגור שאתם בונים: אפשר להעלות עד כ-300-400 מקורות למחברת אחת - מסמכים,
+      PDF, Word, אתרים, סרטוני יוטיוב, קבצי דרייב, ואפילו קבצי אודיו (כולל פורמטים לא נפוצים כמו M4A מהקלטת נייד).
+      לכל תשובה מצורף ציטוט שמצביע בדיוק על המקור - כך אפשר לבדוק ולא "לסמוך בעיניים עצומות".
+    </p>
+    <div class="rounded-xl p-4 mt-4 border border-amber-200 bg-amber-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-amber-700">⚠️ קבצי אודיו גדולים:</b> הקלטה של שעה וחצי-שעתיים עלולה לחרוג ממגבלת הגודל להעלאה
+      ישירה (כ-100MB). הפתרון: להעלות את הקובץ קודם לגוגל דרייב, ולחבר את המחברת לדרייב במקום להעלות קובץ ישירות.
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mb-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="folder-cog" class="icon-badge w-5 h-5 text-cyan-500"></i><h3 class="font-bold text-lg">דוגמה - מאגר מערכי הדרכה ארגוני</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">בונים מחברת אחת עם כל מערכי ההדרכה הקיימים בארגון (גם ישנים), ואז כל מדריך יכול לשאול "איזו פעילות מתאימה לנושא X" ולקבל תשובה מבוססת על החומר האמיתי שכבר קיים - במקום לחפש ידנית תיקייה-תיקייה.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="sprout" class="icon-badge w-5 h-5 text-emerald-500"></i><h3 class="font-bold text-lg">דוגמה - מחקר אישי מתמשך</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">מחברת אישית בנושא (למשל גינון): מצרפים כל שיחת צ'אט קודמת שהתקיימה בנושא, סרטוני יוטיוב של מומחה מוערך, ומאמרים. כך במקום לחפש בשיחות ישנות, כל הידע יושב במקום אחד וזוכר גם החלטות והקשר שנצברו לאורך זמן.</p>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 mb-5 reveal">
+    <div class="flex items-center gap-2 mb-2"><i data-lucide="folder-input" class="icon-badge w-5 h-5 text-purple-500"></i><h3 class="font-bold text-lg">תיקיית שיחות כמקור</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed">אפשר לרכז שיחות צ'אט קשורות בתיקייה (בג'מיני: לחיצה על שלוש הנקודות ‹ הוספה לתיקייה) ולהזין את כל התיקייה כמקור למחברת. כך גם היסטוריית שיחות "מתנקזת" למאגר הידע הסגור, ולא רק קבצים שהועלו מבחוץ.</p>
+  </div>
+
+  <div class="mt-9 reveal">
+    <h3 class="font-bold text-xl mb-1 flex items-center gap-2"><i data-lucide="layout-panel-top" class="w-5 h-5 text-indigo-500"></i> פאנל Studio - הפלטים שאפשר להפיק מהמקורות</h3>
+    <p class="text-xs text-cyan-600 mb-4">בכל פלט: אפשר פשוט ללחוץ וליצור עם הגדרות ברירת מחדל - אבל עדיף ללחוץ על החץ הקטן ליד הכפתור ולראות את אפשרויות ההתאמה, כדי לשלוט בתוצר במקום לתת למודל "לרוץ חופשי".</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">🎧 Audio Overview (פודקאסט)</b><p class="text-slate-600 mt-1">שיחת שני "מגישים" על המקורות. בחץ בוחרים סגנון: ירידה לפרטים, תקציר, ביקורת או דיבייט (עימות דעות) - ואפשר להנחות אותו למקד רק בנושא מסוים מתוך כל המקורות.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">🎬 Video Overview</b><p class="text-slate-600 mt-1">סרטון מוסבר עם ויזואליה על בסיס המקורות - כולל אפשרות לבחור סגנון ויזואלי (למשל "פיקסר 3D").</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">📊 מצגת (Slide Deck)</b><p class="text-slate-600 mt-1">הכי מדויק כשבונים קודם "שלד" תוכן בצ'אט רגיל (מה בכל שקופית), ורק אז מדביקים אותו כמקור למחברת ומבקשים ליצור ממנו את המצגת - שליטה טובה בהרבה מלתת לו יד חופשית.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">🖼️ אינפוגרפיקה</b><p class="text-slate-600 mt-1">כרגע יש מגוון סגנונות מוכנים לבחירה (רישום-יד, מדעי, אנימה, עריכתי ועוד). שימו לב: לפעמים המחברת "מפספסת" תמונות שהועלו כמקור ולא משלבת אותן - כדאי לבדוק את התוצר.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">🗺️ מפת חשיבה (Mind Map)</b><p class="text-slate-600 mt-1">דיאגרמה שמארגנת את הנושאים המרכזיים מהמקורות בצורה היררכית וויזואלית.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">📝 בוחן וכרטיסיות</b><p class="text-slate-600 mt-1">בוחן ושאלות עם מעקב התקדמות, וכרטיסיות זיכרון (Flashcards) עם סימון "ידעתי / לא ידעתי" - נוח לבדיקת הבנה אחרי הדרכה.</p></div>
+    </div>
+    <div class="rounded-xl p-4 mt-4 border border-cyan-200 bg-cyan-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-cyan-700">💡 טיפ:</b> אפשר גם לבקש מהתוצרים עצמם עריכה חופשית - לשנות אורך, טון (רשמי/יומיומי) או כותרת - ממש כמו ב-Canvas.
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY 2 -->
+<section id="glossary2" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מילון מונחים - תוספות שיעור 2</h2>
+    <p class="text-slate-500 mt-2 mb-4">מונחים חדשים מהשיעור. למונחים משיעור 1 (Canvas, Gems, מחקר עומק ועוד) - ראו שיעור 1.</p>
+    <div class="relative mb-6">
+      <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2"></i>
+      <input id="glossarySearch2" type="text" placeholder="חיפוש מונח..." class="w-full glass rounded-xl py-3 pr-12 pl-4 text-sm outline-none focus:border-indigo-400 transition">
+    </div>
+  </div>
+  <div id="glossaryGrid2" class="grid md:grid-cols-2 gap-3"></div>
+  <p id="noResults2" class="hidden text-center text-slate-400 py-8">לא נמצא מונח תואם.</p>
+</section>
+</div><!-- /lesson-block l2 -->
 
 <footer class="relative z-10 max-w-6xl mx-auto px-5 py-12 text-center text-slate-500 text-sm border-t border-indigo-100">
-  מדריך פרקטי לשיעור 1 · מפגש עין יעל · הכלים עלינו, היצירתיות עליכם
+  מדריכים פרקטיים · מפגשי עין יעל · הכלים עלינו, היצירתיות עליכם
 </footer>
 
 <a class="ask-fab" id="askFab" href="https://wa.me/972556692412?text=%D7%94%D7%99%D7%99%20%D7%90%D7%99%D7%AA%D7%9E%D7%A8%2C%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%A9%D7%99%D7%A2%D7%95%D7%A8%201" target="_blank" rel="noopener">
@@ -688,19 +921,211 @@ taskList.addEventListener('change',e=>{
   updateProgress();
 });
 
-const grid=document.getElementById('glossaryGrid');
-glossary.forEach(g=>{
-  const d=document.createElement('div');
-  d.className='glass glass-hover rounded-xl p-4 gloss-item';
-  d.innerHTML=`<h4 class="font-bold text-indigo-700 mb-1">${g.t}</h4><p class="text-sm text-slate-600 leading-relaxed">${g.d}</p>`;
-  grid.appendChild(d);
-});
-document.getElementById('glossarySearch').addEventListener('input',e=>{
-  const q=e.target.value.trim().toLowerCase();let any=false;
-  document.querySelectorAll('.gloss-item').forEach(it=>{
-    const m=it.textContent.toLowerCase().includes(q);it.style.display=m?'':'none';if(m)any=true;});
-  document.getElementById('noResults').classList.toggle('hidden',any);
-});
+function renderGlossary(list,gridId,searchId,noResultsId){
+  const grid=document.getElementById(gridId);
+  list.forEach(g=>{
+    const d=document.createElement('div');
+    d.className='glass glass-hover rounded-xl p-4 gloss-item';
+    d.innerHTML=`<h4 class="font-bold text-indigo-700 mb-1">${g.t}</h4><p class="text-sm text-slate-600 leading-relaxed">${g.d}</p>`;
+    grid.appendChild(d);
+  });
+  document.getElementById(searchId).addEventListener('input',e=>{
+    const q=e.target.value.trim().toLowerCase();let any=false;
+    grid.querySelectorAll('.gloss-item').forEach(it=>{
+      const m=it.textContent.toLowerCase().includes(q);it.style.display=m?'':'none';if(m)any=true;});
+    document.getElementById(noResultsId).classList.toggle('hidden',any);
+  });
+}
+renderGlossary(glossary,'glossaryGrid','glossarySearch','noResults');
+
+/* ---------- GLOSSARY 2 (lesson 2 additions) ---------- */
+const glossary2 = [
+  {t:'NotebookLM',d:'כלי גוגל שבונה מאגר ידע סגור מתוך מקורות שאתם מעלים בלבד, ועונה עם ציטוט מדויק לכל מקור - לא מתוך הידע הכללי של המודל.'},
+  {t:'מקור (Source)',d:'קובץ, אתר, סרטון או הקלטה שהעליתם למחברת ב-NotebookLM. המודל עונה אך ורק על סמך המקורות הפעילים.'},
+  {t:'Studio',d:'הפאנל ב-NotebookLM שממיר את המקורות לפלטים מוכנים: פודקאסט, סרטון, מצגת, אינפוגרפיקה, בוחן, כרטיסיות ומפת חשיבה.'},
+  {t:'Audio Overview',d:'פודקאסט שנוצר אוטומטית משיחת שני "מגישים" על המקורות שהעליתם, עם אפשרות לבחור עומק וסגנון (תקציר / דיבייט / ביקורת).'},
+  {t:'Connectors / Plugins',d:'החיבורים החיצוניים של ChatGPT (Drive, Canva ועוד) שמאפשרים לו לפעול מול שירותים אחרים - מקביל לפקודות ה-@ ב-Gemini.'},
+  {t:'קונטקסט (Context)',d:'כל המידע שהמודל "יודע" עליכם מתוך השיחה הנוכחית וההיסטוריה. ככל שנותנים יותר הקשר - התשובה מדויקת יותר, אבל שיחות ארוכות מדי עלולות לגרום למודל "לאבד" הקשר.'},
+];
+
+/* screenshots renderer - reusable for lesson 1 and lesson 2 galleries */
+function renderShots(list,folder,galleryId,emptyId){
+  const gal=document.getElementById(galleryId);
+  if(!list.length){ if(emptyId) document.getElementById(emptyId).classList.remove('hidden'); return; }
+  list.forEach((s,si)=>{
+    const src=encodeURI(folder+s.f);
+    const wrap=document.createElement('div');
+    wrap.className='glass rounded-2xl p-4 md:p-6 reveal mb-8';
+    const dotsHtml=s.markers.map((m,i)=>`<button class="ss-dot" data-si="${si}" data-i="${i}" style="left:${m.x}%;top:${m.y}%;--d:${(i*0.13).toFixed(2)}s;animation-delay:${(i*0.05).toFixed(2)}s" aria-label="${m.label}"></button>`).join('');
+    wrap.innerHTML=`
+      <h3 class="font-bold text-xl mb-1">${s.t}</h3>
+      <p class="text-sm text-slate-500 mb-3">${s.d}</p>
+      <div class="ss-imgwrap" data-si="${si}">
+        <img src="${src}" alt="${s.t}" loading="lazy">
+        ${dotsHtml}
+        <div class="ss-pop"></div>
+      </div>
+      <div class="ss-toolbar">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="ss-toggle ss-btn" data-si="${si}"><span>👁 הסתר נקודות</span></button>
+          <button class="ss-zoom ss-btn" data-si="${si}">🔍 הגדל תמונה</button>
+        </div>
+        <span class="ss-hint">לחצו על נקודה כדי לראות הסבר על מה שהיא מסמנת</span>
+      </div>`;
+    gal.appendChild(wrap);
+  });
+  gal.addEventListener('click',e=>{
+    const tgl=e.target.closest('.ss-toggle');
+    if(tgl){const wrap=gal.querySelectorAll('.ss-imgwrap')[tgl.dataset.si];const hidden=wrap.classList.toggle('hide-markers');
+      tgl.querySelector('span').textContent=hidden?'👁 הצג נקודות':'👁 הסתר נקודות';if(hidden)closePop(wrap);return;}
+    const zoom=e.target.closest('.ss-zoom');
+    if(zoom){const img=gal.querySelectorAll('.ss-imgwrap')[zoom.dataset.si].querySelector('img');openLightbox(img.src,img.alt);return;}
+    const x=e.target.closest('.ss-pop-x');
+    if(x){closePop(x.closest('.ss-imgwrap'));return;}
+    const dot=e.target.closest('.ss-dot');
+    if(dot){const wrap=dot.closest('.ss-imgwrap');const already=dot.classList.contains('active');
+      closePop(wrap);if(!already){dot.classList.add('active');openPop(wrap,dot,list[+dot.dataset.si].markers[+dot.dataset.i]);}return;}
+    const w=e.target.closest('.ss-imgwrap');
+    if(w){if(!e.target.closest('.ss-pop'))closePop(w);return;}
+  });
+}
+/* lesson 2 screenshots */
+const shots2 = [
+  {f:'chatgpt.png',t:'ChatGPT - כפתור ה+ (חיבורים והעלאות)',d:'התפריט שנפתח בלחיצה על ה+ ליד תיבת הכתיבה.',markers:[
+    {x:3,y:26,label:'Projects - תיקיות עבודה',d:'מקביל לתיקיות Notebook ב-Gemini: תיקיית שיחות עם קבצים והנחיות משותפות שכל השיחות בפרויקט חולקות ביניהן.'},
+    {x:2.5,y:48,label:'רשימת שיחות (Chats)',d:'היסטוריית הצ׳אטים לפי תאריך - אותו עיקרון כמו בסרגל הצידי של Gemini.'},
+    {x:33,y:60.5,label:'כפתור + (Add files and more)',d:'פותח את תפריט ההעלאות והחיבורים - קבצים, תמונות, וכלים מחוברים (Connectors).'},
+    {x:85,y:63.5,label:'מגבלת העלאות בגרסה החינמית',d:'"Or wait 1 hour" - בחינם יש מגבלת כמות קבצים להעלאה לשעה. שימו לב להודעה הזו לפני שממשיכים.'},
+    {x:85,y:68.5,label:'Create image - יצירת תמונה',d:'יצירת תמונות מתיאור טקסטואלי חופשי; בגרסה החינמית יש מכסת שימוש שמתאפסת מדי כמה שעות.'},
+    {x:85,y:73.5,label:'Web search - חיפוש באינטרנט',d:'מחפש מידע עדכני ברשת בזמן אמת - מקביל לכפתור "חפש בגוגל" ב-Gemini.'},
+    {x:85,y:78.5,label:'Deep research - מחקר עומק',d:'סריקת עשרות מקורות והפקת דוח מפורט ומגובה. בגרסה החינמית מוגבל למספר מחקרים בחודש.'},
+    {x:85,y:83.5,label:'GitHub',d:'חיבור לניהול קוד, Pull Requests ו-CI - רלוונטי בעיקר למפתחים, לא לשימוש היומיומי הרגיל.'},
+    {x:85,y:88.5,label:'OpenAI Platform',d:'יצירת מפתח API לשימוש מתקדם/פיתוח - לא נדרש לשימוש שוטף בצ׳אט.'},
+    {x:85,y:93.5,label:'Canva',d:'חיבור (Connector) לכלי העיצוב Canva - יצירה, עריכה וסקירה של עיצובים ישירות מתוך ChatGPT.'},
+  ]},
+  {f:'chatgpt 2.png',t:'ChatGPT - תפריט שיחה והצעות פעולה',d:'תפריט שלוש הנקודות על שיחה, והצעות פעולה מהירות במסך ריק.',markers:[
+    {x:28,y:58.5,label:'Share',d:'שיתוף השיחה בקישור ציבורי - כמו ב-Gemini.'},
+    {x:28,y:63.5,label:'Rename',d:'שינוי שם השיחה כדי שיהיה קל יותר למצוא אותה בחיפוש בהמשך.'},
+    {x:28,y:68.5,label:'Move to project',d:'העברת השיחה לתוך אחד מה-Projects (יש חץ לתת-תפריט לבחירת הפרויקט).'},
+    {x:28,y:73.5,label:'Pin chat',d:'נעיצת השיחה בראש הרשימה הצידית.'},
+    {x:28,y:78.5,label:'Archive',d:'העברה לארכיון בלי למחוק לצמיתות.'},
+    {x:28,y:83.5,label:'Delete',d:'מחיקה סופית של השיחה (מסומן באדום).'},
+    {x:35,y:65,label:'Create an image',d:'קיצור דרך מוצע במסך ריק ליצירת תמונה.'},
+    {x:35,y:72.5,label:'Write or edit',d:'קיצור דרך לכתיבה או עריכת טקסט ארוך - זה מה שפותח בדרך כלל את ה-Canvas.'},
+    {x:35,y:79.5,label:'Look something up',d:'קיצור דרך לחיפוש מידע עדכני באינטרנט.'},
+  ]},
+  {f:'קנבס פתיחה.png',t:'Gemini - איפה פותחים Canvas, ותיקיות Notebook',d:'מסך הצ׳אט הראשי של Gemini עם הרחבה חדשה בסרגל הצידי.',markers:[
+    {x:61,y:42.5,label:'תיקיות Notebook',d:'קטגוריה בסרגל הצידי של Gemini: כל תיקייה כאן היא בעצם מחברת NotebookLM - שיחות שקשורות לנושא יכולות "להתנקז" לתיקייה המתאימה.'},
+    {x:61,y:46.5,label:'תיקיית Notebook חדשה +',d:'יצירת מחברת NotebookLM חדשה ישירות מתוך Gemini, בלי לצאת לאתר הנפרד.'},
+    {x:61,y:51.5,label:'מחברות קיימות',d:'מחברות NotebookLM שכבר נוצרו מופיעות כאן כתיקיות - לחיצה עליהן פותחת את המחברת.'},
+    {x:61,y:58.5,label:'כל תיקיות ה-Notebook',d:'מסך ריכוז לכל המחברות שנוצרו בחשבון.'},
+    {x:22,y:90.5,label:'בורר מודל',d:'בחירת מודל (כאן "מורחב Flash") - אותו עיקרון כמו במסך הראשי שנלמד בשיעור 1.'},
+    {x:57,y:90.5,label:'כפתור Canvas',d:'הכפתור שפותח את Canvas - סביבת עריכה חיה שנפתחת לצד הצ׳אט.'},
+    {x:62.5,y:90.5,label:'כפתור +',d:'פותח את תפריט העלאת הקבצים והכלים, כמו במסך הראשי.'},
+  ]},
+  {f:'יצירת תיקיה 1.png',t:'תיקיות Notebook - רשימה מלאה',d:'הרחבה נוספת על רשימת המחברות בסרגל הצידי של Gemini.',markers:[
+    {x:91,y:49.7,label:'תיקיית Notebook חדשה +',d:'יצירת מחברת NotebookLM חדשה ישירות מכאן, בלי לצאת ל-Gemini.'},
+    {x:70,y:51,label:'תיאור מלא בריחוף',d:'מעבר עכבר על שם תיקייה מציג את הכותרת המלאה של המחברת, גם אם היא ארוכה מדי להצגה ברשימה הצרה.'},
+    {x:79.5,y:51,label:'תפריט פעולות',d:'שלוש נקודות עם אפשרויות נוספות על המחברת (שינוי שם, שיתוף ועוד).'},
+    {x:90,y:57,label:'מחברת ללא שם (Untitled)',d:'מחברת שנוצרה אך עדיין לא קיבלה כותרת - כדאי לשנות לה שם כדי לזהות אותה בקלות בהמשך.'},
+    {x:91,y:64.5,label:'כל תיקיות ה-Notebook',d:'מסך ריכוז לכל המחברות שנוצרו בחשבון.'},
+  ]},
+  {f:'יצירת תיקיה 2.png',t:'פתיחת מחברת מתוך Gemini',d:'מה שרואים כשלוחצים על תיקיית Notebook קיימת בתוך Gemini.',markers:[
+    {x:11,y:24,label:'קישור ל-NotebookLM המלא',d:'פותח את המחברת באתר הייעודי notebooklm.google.com, עם כל היכולות המלאות (Studio, שיתוף ועוד) - התצוגה כאן בתוך Gemini מצומצמת יותר.'},
+    {x:44,y:41,label:'כותרת המחברת',d:'שם המחברת כפי שנשמר.'},
+    {x:17,y:45.5,label:'תקציר מקורות',d:'"10 מקורות" - מציג כמה מקורות יש במחברת, עם אייקונים קטנים לכל סוג מקור שהוזן.'},
+    {x:59,y:68.5,label:'שיחות קודמות',d:'כל שאלה ששאלתם בתוך המחברת הזו נשמרת כאן ואפשר לחזור אליה.'},
+    {x:91,y:51.5,label:'המחברת הנוכחית מסומנת',d:'התיקייה הפעילה מודגשת ברשימה הצידית, כדי לדעת איפה נמצאים.'},
+  ]},
+  {f:'יצירה קנבס.png',t:'Canvas פתוח - תפריט "יצירה"',d:'לחיצה על "יצירה" בתוך Canvas פותחת רשימת תוצרים אפשריים.',markers:[
+    {x:12,y:24,label:'כפתור יצירה',d:'הופך את המסמך שבקנבס לתוצר אחר. לחיצה פותחת את הרשימה הזו.'},
+    {x:23,y:30,label:'דף אינטרנט',d:'הופך את הטקסט לאתר/אפליקציה עובדת - נפתח שדה תיאור מתחת לרשימה כדי לפרט בדיוק מה רוצים שהאפליקציה תעשה.'},
+    {x:23,y:35.5,label:'אינפוגרפיקה',d:'יוצר עמוד ויזואלי מעוצב מתוך התוכן הקיים.'},
+    {x:25,y:41,label:'בוחן',d:'הופך את התוכן לחידון אינטראקטיבי לבדיקת הבנה.'},
+    {x:23,y:46.5,label:'כרטיסי לימוד',d:'כרטיסיות זיכרון (Flashcards) ללימוד וחזרה על החומר.'},
+    {x:24,y:52,label:'סקירה קולית',d:'פודקאסט קולי שמסכם את התוכן - מקביל ל-Audio Overview ב-NotebookLM.'},
+    {x:20,y:59.5,label:'תיאור האפליקציה שלך',d:'שדה שמופיע כשבוחרים "דף אינטרנט" - כאן מתארים בדיוק את האפליקציה הרצויה לפני היצירה.'},
+    {x:6,y:32,label:'שינוי אורך',d:'התארכות או קיצור אוטומטי של התוכן.'},
+    {x:6,y:38,label:'שינוי טון',d:'שינוי סגנון הכתיבה - רשמי, יומיומי, מקצועי וכו׳.'},
+    {x:6,y:44,label:'הצעת עריכה',d:'Gemini מציע בעצמו שיפורים לטקסט הקיים, לפני שמאשרים.'},
+    {x:6.5,y:24,label:'סגירה (X)',d:'סגירת Canvas והחזרה לתצוגת צ׳אט מלאה.'},
+    {x:17,y:24,label:'שיתוף',d:'שיתוף התוצר בקישור.'},
+    {x:20,y:24,label:'הדפסה',d:'הדפסה או ייצוא ישיר של המסמך.'},
+  ]},
+  {f:'קנבס פתוח תתייחס גם לאופציות של שינוי אורךוטון הצעה של שינויי עריכה.png',t:'Canvas - כלי העריכה הצידיים',d:'אותו מסמך בתצוגה נקייה, בלי תפריט "יצירה" פתוח.',markers:[
+    {x:35,y:24,label:'שלוש נקודות',d:'אפשרויות נוספות על המסמך (הורדה, גרסה וכו׳).'},
+    {x:38,y:24,label:'היסטוריית גרסאות',d:'חזרה קדימה/אחורה על שינויים שנעשו במסמך.'},
+    {x:48,y:24,label:'כותרת המסמך',d:'שם התוצר - ניתן לעריכה ישירה בלחיצה.'},
+    {x:6,y:32,label:'שינוי אורך',d:'התארכות או קיצור אוטומטי של התוכן.'},
+    {x:6,y:38,label:'שינוי טון',d:'שינוי סגנון הכתיבה - רשמי, יומיומי, מקצועי וכו׳.'},
+    {x:6,y:44,label:'הצעת עריכה',d:'Gemini מציע בעצמו שיפורים לטקסט הקיים, לפני שמאשרים.'},
+    {x:50,y:55,label:'התוכן הראשי',d:'כל הטקסט בתוך הקנבס ניתן לעריכה ישירה, בדיוק כמו במסמך Word - אפשר גם לסמן קטע ולבקש שינוי רק עליו.'},
+  ]},
+  {f:'notebookLM 3.png',t:'NotebookLM - מסך העבודה הראשי',d:'שלושת האזורים: מקורות, צ׳אט ו-Studio.',markers:[
+    {x:11.9,y:41.7,label:'מצגת (Slide Deck)',d:'יצירת מצגת שקופיות מהמקורות. תג "בטא" מסמן פיצ׳ר חדש יחסית.'},
+    {x:23.2,y:41.7,label:'סקירה (Audio Overview)',d:'פודקאסט של שני "מגישים" שדנים במקורות. בלחיצה על החץ בוחרים סגנון: תקציר, ירידה לפרטים, ביקורת או דיבייט.'},
+    {x:11.9,y:50.5,label:'מפה (Mind Map)',d:'דיאגרמת מפת חשיבה שמארגנת את הנושאים המרכזיים מהמקורות בצורה היררכית.'},
+    {x:23.2,y:50.5,label:'סרטון (Video Overview)',d:'סרטון מוסבר על בסיס המקורות. יש גם גרסה "קולנועית" (Cinematic) עם ויזואליה מונפשת וסגנון בימוי.'},
+    {x:11.9,y:59.3,label:'כרטיסי עזר (Flashcards)',d:'כרטיסיות זיכרון עם סימון "ידעתי/לא ידעתי" - ההתקדמות נשמרת גם אם חוזרים בפעם אחרת.'},
+    {x:23.2,y:59.3,label:'דוחות (Reports)',d:'הפקת דוח כתוב מסודר מתוך המקורות - מדריך לימוד, סיכום או ניתוח.'},
+    {x:11.9,y:68.1,label:'אינפוגרפי (בטא)',d:'יש כיום מגוון סגנונות מוכנים לבחירה (רישום-יד, מדעי, אנימה, עריכתי ועוד).'},
+    {x:23.2,y:68.1,label:'בוחן (Quiz)',d:'בוחן עם שאלות ומעקב התקדמות, כמו בכרטיסי העזר.'},
+    {x:23.2,y:76.9,label:'טבלת (Data Table)',d:'ריכוז נתונים מהמקורות בפורמט טבלה.'},
+    {x:34,y:37,label:'התאמה אישית',d:'התאמת אישיות/סגנון התשובות שהמחברת נותנת לכם.'},
+    {x:63,y:59,label:'שם המחברת וסטטוס',d:'שם המחברת ומספר המקורות הפעילים בה (0 מקורות = עדיין ריקה).'},
+    {x:63,y:87,label:'שדה השאלה',d:'כאן שואלים שאלות על המקורות - כל תשובה תגיע עם מספר ציטוט שמצביע בדיוק על המקור שממנו הובא המידע.'},
+    {x:86.5,y:37,label:'הוספת מקורות +',d:'פתיחת חלון העלאת מקורות חדשים למחברת.'},
+    {x:89,y:44.5,label:'חיפוש מקורות חדשים באינטרנט',d:'פיצ׳ר חדש: NotebookLM יכול לחפש ולהציע מקורות בעצמו מהרשת, לא רק ממה שהעליתם ידנית.'},
+  ]},
+  {f:'notebookLM 2.png',t:'הוספת מקורות - חיפוש עצמאי ברשת',d:'החלון שנפתח בלחיצה על "הוספת מקורות".',markers:[
+    {x:50,y:30,label:'הצעת סקירה מנושא',d:'החלון מציע גם ליצור סקירה קולית/וידאו ישירות מנושא שמחפשים באינטרנט, לא רק מקובץ שהועלה.'},
+    {x:50,y:45.5,label:'שדה חיפוש',d:'הקלידו נושא, ו-NotebookLM יסרוק את הרשת בעצמו ויציע מקורות רלוונטיים.'},
+    {x:59,y:52.5,label:'עומק החיפוש (Fast Research)',d:'בחירת מהירות/עומק החיפוש - מהיר יותר מול מעמיק ומקיף יותר.'},
+    {x:71,y:52.5,label:'היקף החיפוש',d:'טווח המקורות שיסרקו - כרגע מוגדר לכל האינטרנט הפתוח.'},
+    {x:34,y:87,label:'טקסט שהועתק',d:'הדבקת טקסט ישירות כמקור, בלי צורך בקובץ.'},
+    {x:45,y:87,label:'Drive',d:'חיבור לגוגל דרייב - שליפת קבצים בלי להוריד אותם קודם למחשב.'},
+    {x:55,y:87,label:'אתרים',d:'הוספת קישור לאתר או לסרטון יוטיוב כמקור.'},
+    {x:67,y:87,label:'העלאת קבצים',d:'העלאת קובץ מהמחשב - PDF, Word, תמונה, אודיו (כולל פורמטים כמו M4A) ועוד.'},
+  ]},
+  {f:'notebookLM 6.png',t:'מחברת עם מקורות - בקרה על כל מקור',d:'מחברת עם 10 מקורות פעילים ותפריט פעולות על מקור בודד.',markers:[
+    {x:55,y:21,label:'שם המחברת ומספר המקורות',d:'כאן רואים שהועלו 10 מקורות למחברת הזו.'},
+    {x:8,y:39,label:'פאנל Studio',d:'אותם פלטים שנסקרו קודם (מצגת, סקירה, מפה ועוד) - זמינים לכל מחברת עם מקורות.'},
+    {x:84,y:41,label:'"כל המקורות"',d:'וי מרכזי שמפעיל/מכבה בבת אחת את כל המקורות במחברת.'},
+    {x:79,y:48,label:'וי/איקס ליד כל מקור',d:'אפשר לסמן כל מקור בנפרד - מכבים מקור מסוים כדי לצמצם זמנית על מה המודל עונה, בלי למחוק אותו.'},
+    {x:76,y:57.5,label:'הסרת המקור',d:'מחיקת המקור לצמיתות מהמחברת (מתוך תפריט שלוש הנקודות על מקור).'},
+    {x:76,y:62.5,label:'שינוי שם המקור',d:'שינוי הכותרת המוצגת של המקור, לנוחות זיהוי ברשימה.'},
+  ]},
+  {f:'notebookLM 4.png',t:'שיתוף מחברת',d:'חלון השיתוף של NotebookLM.',markers:[
+    {x:50,y:41,label:'הוספת אנשים/קבוצות',d:'הזנת כתובות מייל של מי שיקבל גישה למחברת.'},
+    {x:50,y:53.5,label:'שליחת הודעה',d:'ניתן לכבות את שליחת הודעת המייל האוטומטית לשותפים החדשים.'},
+    {x:88,y:59.5,label:'בעלים',d:'בעל/ת המחברת - החשבון שיצר אותה.'},
+    {x:68,y:68.5,label:'רמת הגישה',d:'"מוגבלת" (עם מנעול) - כרגע רק מי שהוזמן במפורש יכול לפתוח את הקישור.'},
+    {x:39,y:83,label:'שמירה',d:'שמירת השינויים בהרשאות הגישה.'},
+    {x:59,y:83,label:'העתקת הקישור',d:'העתקת קישור שיתוף - חשוב לבדוק את רמת הגישה לפני ששולחים אותו הלאה.'},
+  ]},
+  {f:'notebookLM 5.png',t:'הגדרות NotebookLM',d:'תפריט ההגדרות (גלגל השיניים) של המחברת.',markers:[
+    {x:17,y:28,label:'עזרה',d:'מרכז העזרה הרשמי של Gemini Notebook.'},
+    {x:17,y:33.5,label:'שליחת משוב',d:'דיווח על תקלות או הצעות שיפור לגוגל.'},
+    {x:17,y:38.5,label:'Discord',d:'קהילת המשתמשים הרשמית בדיסקורד.'},
+    {x:17,y:44,label:'שפת הפלט',d:'שפת התשובות והתוצרים שהמערכת מייצרת - למשל, לוודא שהיא תמיד עונה בעברית גם אם המקורות באנגלית.'},
+    {x:17,y:49.5,label:'רישיונות',d:'מידע משפטי על רישיונות קוד פתוח.'},
+    {x:17,y:55,label:'מכשיר (עיצוב)',d:'מצב תצוגה - כהה, בהיר או לפי הגדרת המכשיר.'},
+    {x:17,y:61,label:'שדרוג NotebookLM',d:'שדרוג לגרסת Pro עם מכסות גדולות יותר של מחברות, מקורות ופלטים.'},
+  ]},
+];
+renderShots(shots2,'צילומי מסך שיעור 2/','galleryGrid2','shots2Empty');
+renderGlossary(glossary2,'glossaryGrid2','glossarySearch2','noResults2');
+
+/* ---------- LESSON SWITCHER ---------- */
+function setLesson(n){
+  document.body.setAttribute('data-lesson',n);
+  document.querySelectorAll('.lesson-pill').forEach(b=>b.classList.toggle('active',b.dataset.lessonBtn===String(n)));
+  try{localStorage.setItem('einyael_lesson',n);}catch(e){}
+  if(n==='1'||n==='2') history.replaceState(null,'','#lesson'+n);
+  else history.replaceState(null,'',location.pathname);
+  window.scrollTo({top:0,behavior:'instant'});
+  closeAllPops();
+}
 
 /* screenshots - small dots + on-image popup */
 const gal=document.getElementById('galleryGrid');
@@ -770,6 +1195,13 @@ addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scroll
 
 lucide.createIcons();
 updateProgress();
+
+(function initLesson(){
+  const h=location.hash;
+  let start='0';
+  if(h==='#lesson1')start='1';else if(h==='#lesson2')start='2';
+  setLesson(start);
+})();
 </script>
 </body>
 </html>
