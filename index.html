@@ -48,9 +48,11 @@
   .lesson-block{display:none}
   body[data-lesson="1"] .lesson-block.l1{display:block}
   body[data-lesson="2"] .lesson-block.l2{display:block}
+  body[data-lesson="3"] .lesson-block.l3{display:block}
   .nav-links{display:none}
   body[data-lesson="1"] .nav-links.l1{display:flex}
   body[data-lesson="2"] .nav-links.l2{display:flex}
+  body[data-lesson="3"] .nav-links.l3{display:flex}
   .lesson-pill{font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:999px;
     border:1px solid rgba(99,102,241,.28);color:#5145cd;background:rgba(99,102,241,.08);
     cursor:pointer;transition:.25s;white-space:nowrap}
@@ -146,6 +148,7 @@
     <div class="flex items-center gap-1.5 shrink-0">
       <button class="lesson-pill" data-lesson-btn="1" onclick="setLesson('1')">שיעור 1</button>
       <button class="lesson-pill" data-lesson-btn="2" onclick="setLesson('2')">שיעור 2</button>
+      <button class="lesson-pill" data-lesson-btn="3" onclick="setLesson('3')">שיעור 3</button>
     </div>
     <div class="nav-links l1 items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
       <a href="#screens" class="nav-link">צילומים</a>
@@ -163,6 +166,16 @@
       <a href="#notebooklm2" class="nav-link">NotebookLM</a>
       <a href="#glossary2" class="nav-link">מילון</a>
     </div>
+    <div class="nav-links l3 items-center gap-4 md:gap-5 text-sm overflow-x-auto no-scrollbar min-w-0 px-1">
+      <a href="#screens3" class="nav-link">צילומים</a>
+      <a href="#interface3" class="nav-link">ממשק</a>
+      <a href="#canvas3" class="nav-link">קנבס</a>
+      <a href="#gems3" class="nav-link">ג'מס</a>
+      <a href="#images3" class="nav-link">תמונות</a>
+      <a href="#slides3" class="nav-link">מצגות</a>
+      <a href="#tasks3" class="nav-link">משימות</a>
+      <a href="#glossary3" class="nav-link">מילון</a>
+    </div>
     <span class="chip text-xs px-3 py-1 rounded-full shrink-0 hidden sm:inline-block">עין יעל</span>
   </nav>
 </header>
@@ -179,7 +192,7 @@
     בחרו שיעור כדי להתחיל. כל שיעור כולל צילומי מסך מוסברים, מדריך ממשק, סיכום ודוגמאות לפרומפטים.
   </p>
   <p class="mt-3 text-sm text-indigo-500 font-medium float-in" style="animation-delay:.3s">הכלים עלינו · היצירתיות עליכם</p>
-  <div class="grid sm:grid-cols-2 gap-6 mt-11">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-11">
     <button onclick="setLesson('1')" class="glass glass-hover rounded-3xl p-8 text-right float-in" style="animation-delay:.35s">
       <div class="icon-badge w-14 h-14 rounded-2xl chip grid place-items-center mb-4"><i data-lucide="sparkles" class="w-7 h-7"></i></div>
       <h2 class="font-black text-2xl mb-2">שיעור 1</h2>
@@ -190,6 +203,12 @@
       <div class="icon-badge w-14 h-14 rounded-2xl chip grid place-items-center mb-4"><i data-lucide="notebook-text" class="w-7 h-7"></i></div>
       <h2 class="font-black text-2xl mb-2">שיעור 2</h2>
       <p class="text-sm text-slate-500 leading-relaxed mb-5">היכרות עם ChatGPT, תרגיל השוואה מול Gemini, Canvas ו-NotebookLM.</p>
+      <span class="text-indigo-600 font-bold text-sm inline-flex items-center gap-1.5">כניסה לשיעור <i data-lucide="arrow-left" class="w-4 h-4"></i></span>
+    </button>
+    <button onclick="setLesson('3')" class="glass glass-hover rounded-3xl p-8 text-right float-in" style="animation-delay:.55s">
+      <div class="icon-badge w-14 h-14 rounded-2xl chip grid place-items-center mb-4"><i data-lucide="wand-sparkles" class="w-7 h-7"></i></div>
+      <h2 class="font-black text-2xl mb-2">שיעור 3</h2>
+      <p class="text-sm text-slate-500 leading-relaxed mb-5">קנבס - אתרים ואפליקציות קטנות, ג'מס - בניית מומחה אישי, עריכת תמונות ומצגות.</p>
       <span class="text-indigo-600 font-bold text-sm inline-flex items-center gap-1.5">כניסה לשיעור <i data-lucide="arrow-left" class="w-4 h-4"></i></span>
     </button>
   </div>
@@ -490,6 +509,7 @@
         <span class="chip px-2 py-1 rounded-lg">פודקאסט</span>
       </div>
       <p class="text-sm text-slate-600">ייצוא ישיר ל-Google Docs, טיוטת Gmail או קישור ציבורי. שרשרת מומלצת: <b>מחקר עומק ← Google Docs ← Word/PDF</b>.</p>
+      <p class="text-xs text-cyan-600 mt-3">בניית אתר ואפליקציה קטנה בקנבס, שלב אחר שלב - <button onclick="setLesson('3');setTimeout(()=>location.hash='#canvas3',30)" class="text-indigo-600 underline font-medium">שיעור 3 ‹ קנבס</button>.</p>
     </div>
     <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
       <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="settings-2" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">הגדרות ובוטים אישיים (Gems)</h3></div>
@@ -498,6 +518,7 @@
         <li><b class="text-indigo-700">ניהול זיכרון</b> - ייבוא אוטומטי של עובדות מצ'אטים קודמים.</li>
         <li><b class="text-indigo-700">Gems</b> - עוזרי AI קבועים למשימות חוזרות עם שם, אייקון והנחיות הפעלה.</li>
       </ul>
+      <p class="text-xs text-cyan-600 mt-3">איך בונים ג'ם בפועל, כולל בסיס ידע ודוגמאות - <button onclick="setLesson('3');setTimeout(()=>location.hash='#gems3',30)" class="text-indigo-600 underline font-medium">שיעור 3 ‹ ג'מס</button>.</p>
     </div>
   </div>
 </section>
@@ -629,7 +650,11 @@
   <div class="reveal">
     <span class="chip inline-block text-xs px-3 py-1 rounded-full mb-3">הלב של השיעור</span>
     <h2 class="grad-text text-3xl md:text-4xl font-black">NotebookLM</h2>
-    <p class="text-slate-500 mt-2 mb-8">מאגר ידע סגור, שעונה רק על סמך המקורות שהעליתם - עם ציטוט מדויק לכל תשובה.</p>
+    <p class="text-slate-500 mt-2 mb-4">מאגר ידע סגור, שעונה רק על סמך המקורות שהעליתם - עם ציטוט מדויק לכל תשובה.</p>
+    <div class="rounded-xl p-4 mb-8 border border-amber-200 bg-amber-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-amber-700">📛 שינוי שם:</b> גוגל מחליפה את השם <b>NotebookLM</b> ל-<b>Gemini Notebook</b>. אותו כלי בדיוק, אותן מחברות ואותם קישורים -
+      רק המיתוג מתחלף בממשק בהדרגה. אם בצילומי המסך כאן כתוב NotebookLM ואצלכם כתוב Gemini Notebook, זה אותו דבר וכל מה שכתוב כאן נשאר נכון.
+    </div>
   </div>
 
   <div class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
@@ -684,7 +709,7 @@
       מקורות כלליים על ריפוי בטבע, אפשר לבקש "דבר רק על טיפול בטבע ב-PTSD" - והפלט יתמקד אך ורק בזה, מתוך אותם מקורות.
     </div>
     <div class="rounded-xl p-4 mt-3 border border-purple-200 bg-purple-50/50 text-sm text-slate-700 leading-relaxed">
-      <b class="text-purple-700">📊 טיפים בסיסיים למצגת ואינפוגרפיקה</b> (נרחיב על מצגות בשיעור הבא):
+      <b class="text-purple-700">📊 טיפים בסיסיים למצגת ואינפוגרפיקה</b> (המדריך המלא למצגות נמצא ב<button onclick="setLesson('3');setTimeout(()=>location.hash='#slides3',30)" class="text-indigo-600 underline font-medium">שיעור 3 ‹ מצגות</button>):
       <ul class="mt-2 space-y-1 list-disc pr-5">
         <li>הגדירו סגנון ויזואלי רצוי (למשל "פיקסר 3D", "רישום-יד", "עריכתי ומקצועי").</li>
         <li>ציינו "עברית תקנית בלבד" ו"כיוון זרימה מימין לשמאל" כדי למנוע ניסוח מעורב או פריסה הפוכה.</li>
@@ -699,7 +724,9 @@
 <section id="glossary2" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
   <div class="reveal">
     <h2 class="grad-text text-3xl md:text-4xl font-black">מילון מונחים - תוספות שיעור 2</h2>
-    <p class="text-slate-500 mt-2 mb-4">מונחים חדשים מהשיעור. למונחים משיעור 1 (Canvas, Gems, מחקר עומק ועוד) - ראו שיעור 1.</p>
+    <p class="text-slate-500 mt-2 mb-4">מונחים חדשים מהשיעור. למונחים משיעור 1 (Canvas, Gems, מחקר עומק ועוד) - ראו
+      <button onclick="setLesson('1');setTimeout(()=>location.hash='#glossary',30)" class="text-indigo-600 underline font-medium">מילון שיעור 1</button>,
+      ולמונחי הג'מס והתמונות - <button onclick="setLesson('3');setTimeout(()=>location.hash='#glossary3',30)" class="text-indigo-600 underline font-medium">מילון שיעור 3</button>.</p>
     <div class="relative mb-6">
       <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2"></i>
       <input id="glossarySearch2" type="text" placeholder="חיפוש מונח..." class="w-full glass rounded-xl py-3 pr-12 pl-4 text-sm outline-none focus:border-indigo-400 transition">
@@ -709,6 +736,375 @@
   <p id="noResults2" class="hidden text-center text-slate-400 py-8">לא נמצא מונח תואם.</p>
 </section>
 </div><!-- /lesson-block l2 -->
+
+<div class="lesson-block l3">
+<!-- HERO 3 -->
+<section id="top3" class="relative z-10 max-w-6xl mx-auto px-5 pt-32 pb-14 text-center">
+  <div class="chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs mb-6 float-in">
+    <i data-lucide="sparkles" class="w-4 h-4"></i> מדריך פרקטי · מבוסס על סיכום השיעור השלישי
+  </div>
+  <h1 class="text-4xl md:text-6xl font-black leading-tight float-in" style="animation-delay:.1s">
+    קנבס, ג'מס<br><span class="grad-text">ועריכת תמונות</span>
+  </h1>
+  <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto float-in" style="animation-delay:.2s">
+    שיעור של כלים: איך מוציאים תוצר בפועל. קנבס בונה אתר, מסמך או אפליקציה קטנה,
+    הג'ם הוא מומחה קבוע שיושב על הידע שלכם, ובסוף - תמונות ומצגות.
+  </p>
+  <p class="mt-3 text-sm text-indigo-500 font-medium float-in" style="animation-delay:.3s">הכלים עלינו · היצירתיות עליכם</p>
+  <div class="mt-9 flex flex-wrap gap-3 justify-center float-in" style="animation-delay:.4s">
+    <a href="#screens3" class="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-l from-indigo-500 to-purple-500 hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-indigo-300/50">
+      <i data-lucide="image" class="w-5 h-5"></i> צילומי מסך מוסברים
+    </a>
+    <a href="#gems3" class="px-6 py-3 rounded-xl font-bold glass glass-hover text-indigo-700">ג'מס</a>
+  </div>
+</section>
+
+<!-- SCREENSHOTS 3 -->
+<section id="screens3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">צילומי מסך מוסברים</h2>
+    <p class="text-slate-500 mt-2 mb-2">לחצו על נקודה כדי לראות הסבר על מה שהיא מסמנת. הנקודות ממוקמות לצד הרכיבים כדי לא להסתיר אותם.</p>
+    <p class="text-xs text-slate-400 mb-8">כפתור "הגדל תמונה" לצפייה מלאה · "הסתר נקודות" למראה נקי.</p>
+  </div>
+  <div id="galleryGrid3"></div>
+  <p id="shots3Empty" class="text-center text-slate-400 py-10 glass rounded-2xl hidden">צילומי המסך של שיעור 3 יתווספו בקרוב.</p>
+</section>
+
+<!-- INTERFACE 3 -->
+<section id="interface3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">איפה זה יושב</h2>
+    <p class="text-slate-500 mt-2 mb-8">שני הכלים של השיעור נמצאים במקומות שקל לפספס.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="layout-panel-left" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">איפה נמצא קנבס</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>🎨 כפתור <b>Canvas</b> יושב בשורת הכלים מתחת לתיבת הכתיבה, ליד כפתור ה+.</li>
+        <li>⏱️ לוחצים עליו <b>לפני</b> ששולחים את ההודעה, לא אחרי.</li>
+        <li>🤖 לפעמים ג'מיני פותח קנבס לבד כשמבקשים מסמך או אתר, אבל עדיף לא לסמוך על זה ולוודא שהכפתור דלוק.</li>
+        <li>📍 את הכפתור עצמו ראינו כבר ב<button onclick="setLesson('2');setTimeout(()=>location.hash='#screens2',30)" class="text-indigo-600 underline font-medium">צילומי המסך של שיעור 2</button>.</li>
+      </ul>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-3 mb-3"><div class="icon-badge w-11 h-11 rounded-xl chip grid place-items-center"><i data-lucide="gem" class="w-6 h-6"></i></div><h3 class="font-bold text-lg">איפה נמצאים הג'מס</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>⚙️ בפעם הראשונה מגיעים דרך <b>גלגל השיניים ‹ ג'מס</b>.</li>
+        <li>📌 אחרי שיצרתם ג'ם אחד, הוא מופיע ישירות <b>בסרגל הצד</b> ואפשר לגשת אליו משם.</li>
+        <li>⬇️ <b>חובה לגלול למטה.</b> בראש המסך יושבים ג'מים מוכנים של גוגל. הג'מים שלכם וכפתור "Gem חדש" נמצאים מתחתיהם.</li>
+        <li>⚠️ יש שם גם אופציה של <b>יצירת אפליקציות</b> - זה כלי אחר ולא ג'ם רגיל.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rounded-xl p-4 mt-5 border border-amber-200 bg-amber-50/50 text-sm text-slate-700 leading-relaxed reveal">
+    <b class="text-amber-700">📛 שינוי שם:</b> גוגל מחליפה את השם <b>NotebookLM</b> ל-<b>Gemini Notebook</b>. אותו כלי בדיוק, אותן מחברות, אותם קישורים -
+    רק המיתוג מתחלף בממשק בשבועות הקרובים. אם בצילומי המסך כתוב NotebookLM ואצלכם כתוב Gemini Notebook, זה אותו דבר.
+    כל מה שנלמד ב<button onclick="setLesson('2');setTimeout(()=>location.hash='#notebooklm2',30)" class="text-indigo-600 underline font-medium">שיעור 2</button> נשאר נכון.
+  </div>
+</section>
+
+<!-- CANVAS 3 -->
+<section id="canvas3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal mb-8">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">קנבס - שלושה מסלולים</h2>
+    <p class="text-slate-500 mt-2">אותו כפתור, שלושה סוגי תוצר. בשיעור 2 ראינו איפה הוא נמצא, כאן מה עושים איתו.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mb-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="file-pen-line" class="icon-badge w-5 h-5 text-indigo-500"></i><h3 class="font-bold text-lg">1. עריכת מסמך קיים</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">מעלים מסמך (Docs, PDF, Word), פותחים קנבס, והמסמך נפתח בצד כמו בוורד.</p>
+      <ul class="text-sm text-slate-600 space-y-1.5 mt-3">
+        <li>✍️ <b>מסמנים פסקה</b> עם הסמן ומבקשים שינוי רק עליה, בלי לגעת בשאר.</li>
+        <li>🎚️ קיצורי עריכה מובנים: קיצור והארכה, <b>שינוי טון</b> (מזדמן ‹ רשמי), הצעת עריכות.</li>
+        <li>💡 דוגמה מהשיעור: מכתב המלצה לקידום, סימון פסקה, ובקשה "שכתב מחדש בצורה יותר לבבית".</li>
+        <li>📤 ייצוא ל-Docs, ל-Slides או ל-PDF. אם צריך Word - מייצאים ל-Docs ומשם מורידים כ-Word.</li>
+      </ul>
+      <p class="text-xs text-emerald-600 mt-3 font-medium">גם בצ'אט GPT יש קנבס לעריכת טקסט. כדאי לנסות בשניהם ולראות איזה סגנון מתחבר לכם.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="globe" class="icon-badge w-5 h-5 text-cyan-500"></i><h3 class="font-bold text-lg">2. בניית אתר</h3></div>
+      <ol class="text-sm text-slate-600 space-y-1.5 list-decimal pr-5">
+        <li><b>הטקסט</b> - מעתיקים את התוכן שרוצים (ערך מוויקיפדיה, מסמך קיים, PDF).</li>
+        <li><b>שיחה חדשה</b> - מדביקים את הטקסט, מוודאים שקנבס דלוק.</li>
+        <li><b>הבקשה</b> - "על פי הטקסט הזה בלבד, צור לי אתר".</li>
+        <li><b>התיקון</b> - פותחים מיקרופון ומדברים: "אל תכתוב כותרת X אלא Y", "אני רוצה יותר אנימציות, הקהל שלי סטודנטים בני 25".</li>
+      </ol>
+      <p class="text-sm text-slate-600 leading-relaxed mt-3"><b>שיתוף:</b> לוחצים על שיתוף ומקבלים קישור. כל שינוי באתר מחייב <b>שיתוף מחדש</b> - הקישור הישן לא מתעדכן לבד. אפשר גם להפוך את הקישור לקוד QR.</p>
+      <p class="text-xs text-slate-500 mt-2">מתי זה מתאים: כשרוצים להעביר מידע או מסר ממוקד, במקום לשלוח מצגת או מסמך.</p>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-2 mb-2"><i data-lucide="app-window" class="icon-badge w-5 h-5 text-purple-500"></i><h3 class="font-bold text-lg">3. בניית אפליקציה קטנה</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-4">זה החלק שהכי קשה לשחזר לבד, אז לפי הסדר. הדוגמה מהשיעור: <b>מחולל הסכמים למנחים</b> - הכניסו פרטים פעם אחת, קבלו מסמך מוכן להורדה, במקום למלא כל פעם את אותו פורמט מחדש.</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">1. שיחה רגילה, בלי קנבס</b><p class="text-slate-600 mt-1 leading-relaxed">מעלים את המסמך הקיים ומסבירים מי אתם: "אני מנהל באתר עין יעל, זה הפורמט שאני עושה בו הסכמים. אני רוצה שתזהה מה הדפוסים החוזרים".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">2. מגדירים את התוצר</b><p class="text-slate-600 mt-1 leading-relaxed">מה האפליקציה צריכה לעשות: מילוי טופס או הקלדה קולית, ופלט מוכן להורדה עם הלוגו.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">3. שואלים אותו מה הוא צריך</b><p class="text-slate-600 mt-1 leading-relaxed">"איזה מידע אתה צריך ממני כדי להוציא את התוצאה הטובה ביותר?" עונים לשאלות, ומוסיפים שאתם הולכים לבנות את זה בקנבס כדי שיתחשב בזה.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">4. הוא כותב את הפרומפט</b><p class="text-slate-600 mt-1 leading-relaxed">מבקשים ממנו לכתוב את הפרומפט לבנייה. לא כותבים אותו בעצמנו.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">5. שיחה חדשה, קנבס דלוק</b><p class="text-slate-600 mt-1 leading-relaxed">מדביקים את הפרומפט, מצרפים את המסמך, שולחים. המסך המפחיד שרץ הוא קוד - הוא לא באחריותכם.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">6. מתקנים</b><p class="text-slate-600 mt-1 leading-relaxed">מה שלא עובד - מצלמים מסך ושולחים לו: "למה הכפתור הזה לא עובד?", "ביקשתי הקלדה קולית ולא שמת, תוסיף".</p></div>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal">
+    <div class="flex items-center gap-2 mb-3"><i data-lucide="lightbulb" class="icon-badge w-5 h-5 text-amber-500"></i><h3 class="font-bold text-lg">טיפים לקנבס</h3></div>
+    <ul class="text-sm text-slate-600 space-y-2">
+      <li>🎙️ <b>תמיד הקלדה קולית.</b> תגידו לו במפורש "אני עושה הקלדה קולית" - ברגע שהוא יודע, הוא מבין לבד ששגיאות כתיב הן שגיאות תמלול ולא כוונה.</li>
+      <li>❓ הוסיפו: "<b>אם אתה לא מבין משהו שאמרתי, תגיד לי</b>".</li>
+      <li>📌 אהבתם משהו? אמרו לו במפורש "<b>תשאיר בדיוק אותו דבר</b>" לפני שאתם מבקשים שינוי.</li>
+      <li>🆕 <b>בקנבס עדיף שיחה חדשה</b> לכל תוצר, ולא להמשיך על גבי שיחה ארוכה.</li>
+      <li>🧠 <b>תמיד מודל עם חשיבה מעמיקה.</b> לוקח כמה שניות יותר, התשובה טובה יותר.</li>
+      <li>🚫 <b>"אל תנסה לרצות אותי"</b> - אחת הטכניקות מ<button onclick="setLesson('1');setTimeout(()=>location.hash='#prompting',30)" class="text-indigo-600 underline font-medium">רשימת הפרומפטים של שיעור 1</button>, וכאן היא קריטית במיוחד.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GEMS 3 -->
+<section id="gems3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <span class="chip inline-block text-xs px-3 py-1 rounded-full mb-3">הלב של השיעור</span>
+    <h2 class="grad-text text-3xl md:text-4xl font-black">ג'מס</h2>
+    <p class="text-slate-500 mt-2 mb-8">מומחה קבוע לתחום אחד, שכבר מכיר את הידע שלכם ולא צריך הסבר מחדש בכל שיחה.</p>
+  </div>
+
+  <div class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="stethoscope" class="icon-badge w-6 h-6 text-indigo-500"></i><h3 class="font-bold text-lg">מה זה ג'ם</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed">
+      יש לנו את כל הרופאים בעולם. אבל כשכואב לי הגב אני רוצה ללכת לאורתופד מומחה גב, וכשכואבת לי היד אני רוצה מומחה כף יד.
+      זה בדיוק ג'ם: מומחה קבוע לתחום אחד, שכבר מכיר את המידע שלי ואת האופן שבו אני רוצה שידבר איתי, ואני לא צריך להסביר לו את זה מחדש בכל שיחה.
+    </p>
+    <div class="grid sm:grid-cols-3 gap-4 text-sm mt-5">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">שם</b><p class="text-slate-600 mt-1 leading-relaxed">איך תזהו אותו בסרגל הצד. גם התיאור הוא בשבילכם בלבד, לא בשביל המודל.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">הנחיות</b><p class="text-slate-600 mt-1 leading-relaxed">החלק החשוב. מי הוא, מה התפקיד שלו, איך הוא מדבר אליכם, ומה אסור לו לעשות.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">ידע</b><p class="text-slate-600 mt-1 leading-relaxed">הבסיס שעליו הוא עונה: העלאת קבצים, חיבור לדרייב, או חיבור למחברת נוטבוק.</p></div>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="pen-tool" class="icon-badge w-6 h-6 text-purple-500"></i><h3 class="font-bold text-lg">איך כותבים את ההנחיות בלי לכתוב אותן</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-3">אל תכתבו את הפרומפט בעצמכם. ככה עושים את זה:</p>
+    <ol class="text-sm text-slate-600 space-y-2 list-decimal pr-5">
+      <li>פותחים <b>שיחה רגילה</b> ומספרים מי אתם ומה אתם רוצים: "אני מנהל אירועים באתר עין יעל, אני רוצה ליצור ג'ם שיעזור לי לנתח דוחות מחברת הפרסום. <b>איזה מידע אתה צריך ממני</b> כדי שנוכל להוציא את התוצאה הטובה ביותר?"</li>
+      <li>עונים על השאלות שלו. אם הוא פספס משהו - מחדדים.</li>
+      <li>מבקשים: "<b>כתוב לי פרומפט מפורט</b> לבניית הג'ם". מוסיפים גם איך אתם רוצים שידבר אליכם.</li>
+      <li><b>מעבירים לכלי השני לשיפור.</b> לוקחים את מה שג'מיני כתב ושולחים לצ'אט GPT: "זה מה שג'מיני כתב לי בשביל ג'ם, מה היית משפר?"</li>
+      <li>מעתיקים את התוצאה הסופית לשדה ההנחיות ושומרים.</li>
+    </ol>
+    <div class="rounded-xl p-4 mt-4 border border-cyan-200 bg-cyan-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-cyan-700">💡 מה שצ'אט GPT החזיר בשיעור:</b> לא לחייב אותו לפתוח כל תשובה בעידוד, כי אחרי 20 שיחות זה מעיק. להפוך אותו ליועץ ביקורתי.
+      ו<b>"אל תנסה לרצות את המשתמש"</b>. זה בדיוק מה שנקרא <b>כלים שלובים</b>: כלי אחד בונה, כלי שני מבקר.
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mb-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="megaphone" class="icon-badge w-5 h-5 text-amber-500"></i><h3 class="font-bold text-lg">דוגמה 1 - יועץ שיווק</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">מנהל שמקבל כל חודש דוח מחברת הפרסום ולא באמת מבין מה כתוב בו. הג'ם מנתח את הדוח, מסביר מה זה קליקים, לידים ו-CTR, אומר האם ההשקעה הכספית הגיונית, ובעיקר <b>נותן את רשימת השאלות הנכונות לשאול את החברה</b>.</p>
+      <p class="text-sm text-slate-600 leading-relaxed mt-2">זה הרעיון: אתם לא באים לחברת הפרסום ואומרים "תפסתי אתכם, הצ'אט אמר לי". אתם באים עם שאלות טובות יותר. כמו שבאים לרופא לא כדי להגיד לו שאתם יודעים יותר טוב ממנו, אלא כדי לשאול אותו את השאלות הנכונות.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="users" class="icon-badge w-5 h-5 text-emerald-500"></i><h3 class="font-bold text-lg">דוגמה 2 - סימולטור משוב</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed mb-2">ג'ם שהוא מומחה למשובים ומכיר תיאוריות בתחום. מריצים איתו <b>סימולציה</b> של שיחה קשה לפני שמקיימים אותה באמת:</p>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>📋 נותנים את הרקע: מי העובד, מה קרה, איך נראית מערכת היחסים בשגרה.</li>
+        <li>🎭 מגדירים איך הדמות תתנהג: "אני רוצה שהוא יהיה אדיש ומזלזל".</li>
+        <li>💬 מנהלים את השיחה בפועל, כאילו זו השיחה האמיתית.</li>
+        <li>🏁 אומרים "<b>סיום סימולציה</b>" ומקבלים משוב על איך ניהלתם אותה.</li>
+      </ul>
+      <p class="text-xs text-slate-500 mt-2">שווה לזכור: גם העובד יכול להריץ סימולציה עליכם.</p>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="triangle" class="icon-badge w-6 h-6 text-cyan-500"></i><h3 class="font-bold text-lg">השילוש הקדוש: ג'ם + שיחות + נוטבוק</h3></div>
+    <p class="text-sm text-slate-600 leading-relaxed mb-4">זה החיבור שהופך את הג'ם ממישהו שיודע דבר אחד למערכת שמתעדכנת לבד.</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">1. מחברת</b><p class="text-slate-600 mt-1 leading-relaxed">פותחים <b>מחברת חדשה</b> לתחום, למשל "שיווק", ומעלים אליה את כל הדוחות שיש לכם.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">2. חיבור</b><p class="text-slate-600 mt-1 leading-relaxed">בג'ם, בשדה הידע, <b>מחברים את המחברת</b>.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">3. הנחיה</b><p class="text-slate-600 mt-1 leading-relaxed">"בסיס הידע שלך הוא הנוטבוק. <b>תמיד תתייחס למסמך האחרון ואז תשווה מול הקודמים</b>".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">4. סגירת מעגל</b><p class="text-slate-600 mt-1 leading-relaxed">אחרי שיחה טובה - מוסיפים אותה בחזרה למחברת (שלוש נקודות ‹ הוספה לנוטבוק) ומרעננים.</p></div>
+    </div>
+    <p class="text-sm text-slate-600 leading-relaxed mt-4">מהרגע הזה יש לכם עולם שלם של שיווק: מאגר שמתעדכן, מומחה שיושב עליו, וכל השיחות נשמרות בפנים.
+      את בניית המחברת עצמה למדנו ב<button onclick="setLesson('2');setTimeout(()=>location.hash='#notebooklm2',30)" class="text-indigo-600 underline font-medium">שיעור 2 ‹ NotebookLM</button>.</p>
+    <div class="rounded-xl p-4 mt-4 border border-amber-200 bg-amber-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-amber-700">⚠️ מה שכן צריך לדעת:</b> מחברת שיש בה שיחות מג'מיני היא פרטית ולא ניתנת לשיתוף, ובג'ם שמשותף עם אחרים אי אפשר להשתמש במחברת כמקור ידע.
+      השיטה מצוינת לעבודה שלכם, פחות לשיתוף החוצה.
+    </div>
+    <div class="rounded-xl p-4 mt-3 border border-purple-200 bg-purple-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-purple-700">🤖 בוט, ג'ם, סוכן:</b> <b>בוט</b> - שואלים ומקבלים תשובה. <b>ג'ם</b> - בוט שכבר מכיר אתכם ואת החומר שלכם.
+      <b>סוכן (Agent)</b> - מקבל מטרה ולא הוראה, יוצא למשימה, מחפש ומנסה שוב, וחוזר אחרי עשרים דקות עם התוצאה.
+      סוכן הוא גם מה שדורש זהירות בהרשאות: ברגע שהוא פועל בשמכם, טעות שלו היא טעות שלכם.
+    </div>
+  </div>
+</section>
+
+<!-- IMAGES 3 -->
+<section id="images3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">Banana Nano - עריכת תמונות בתוך Gemini</h2>
+    <p class="text-slate-500 mt-2 mb-8">מודל עריכת התמונות המובנה ב-Gemini. מאפשר מניפולציות מורכבות על תמונות קיימות בצורה פשוטה וחינמית.
+      <span class="text-xs text-slate-400">(יש גם גרסת Nano Banana Pro שדורשת מנוי ומוציאה תוצאות טובות יותר.)</span></p>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-4"><i data-lucide="list-checks" class="icon-badge w-6 h-6 text-amber-500"></i><h3 class="font-bold text-lg">טיפים חשובים לשימוש</h3></div>
+    <ul class="text-sm text-slate-600 space-y-2.5">
+      <li>🪜 <b>עקרון צעד-צעד.</b> כשרוצים לבצע כמה שינויים בתמונה חייבים לעבוד בשלבים. אל תבקשו בבת אחת גם כובע, גם שינוי צבע חולצה וגם רקע של ניו יורק. במקרים רבים המודל לא יסתדר וידלג על חלק מהבקשות, ולכן פשוט צרו כל דבר שלב אחר שלב: קודם כובע, אחרי שיצר לשנות צבע, ואחרי שיצר לבקש רקע.</li>
+      <li>💬 ניתן להשתמש במודל שפה (צ'טג'יפיטי, ג'מיני ועוד) כדי להסביר לו מה שאנחנו רוצים בתמונה, מה המטרה שלנו, למה היא תשמש, ושיחשוב איתנו על התהליך ויצור לנו פרומפט לזה.</li>
+      <li>🔤 <b>עברית מול אנגלית.</b> אם הבקשה בעברית לא מצליחה, נסו לכתוב את ההנחיה באנגלית. לעיתים המודל מגיב טוב יותר כך.</li>
+      <li>🔬 ניתן לגשת לננו בננה גם דרך <b>Google AI Studio</b>, שעליו נלמד בהמשך.</li>
+      <li>🔄 <b>לא אהבתם את התוצאה?</b> לחצו על האייקון של החץ בעיגול (כפתור "ביצוע מחדש"). המודל ייצור גרסה חדשה לאותו פרומפט. נסו כמה פעמים עד שימצא חן בעיניכם.</li>
+      <li>🆕 <b>אם אחרי כמה פעמים לא עבד</b> מה שביקשתם, פתחו שיחה חדשה. במידה ולא עבד שוב, בדקו מה בפרומפט "מפריע לו", ובמידה ועדיין לא עובד נסו לעשות דרך Google AI Studio.</li>
+      <li>🚫 <b>המודל מסרב?</b> אם קיבלתם תשובה בסגנון "לא יכול לבצע", נסו לפתוח שיחה חדשה ולעבוד משם, או לראות האם יש מילה בפרומפט שהיוותה טריגר כמו אלימות, עירום וכו'.</li>
+      <li>👶 <b>נושאים רגישים.</b> כשזה קשור לילדים המודל מאוד זהיר. לפעמים הוא כן יוצר תמונות איתם, אבל לא תמיד ישתף פעולה במלואו. קחו זאת בחשבון ולשיקולכם אם להעלות תמונות של הילדים (מדובר בגוגל וגם ככה התמונות מגובות לשם, אבל לשיקולכם).</li>
+      <li>⬇️ <b>מומלץ ללחוץ על כפתור ההורדה עם החץ</b>, ככה מורידים תמונה באיכות גבוהה יותר.</li>
+      <li>🎚️ <b>שינויים.</b> אם שינוי יצא מוגזם מדי, בקשו במילים כמו "פחות חזק", "יותר עדין", "כהה מעט". תזכרו שמדובר בשיחה, ולכן המשיכו ובקשו כל מה שתרצו. אבל אם בשלב מסוים הוא "מאבד את זה", התחילו שיחה חדשה.</li>
+    </ul>
+  </div>
+
+  <div class="reveal">
+    <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><i data-lucide="wand-2" class="w-5 h-5 text-purple-500"></i> יכולות ודוגמאות</h3>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">1. יצירת תמונה מאפס</b><p class="text-slate-600 mt-1 leading-relaxed">"צור לי תמונה של ארנב אוכל פלאפל בגשם שיראה אמיתי". ניתן לבחור בכל סגנון ציור או צילום שעולה בדעתכם: פיקסאר 3D, דיסני, ואן גוך, צילום ממצלמת אבטחה, צילום תדמית ועוד.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">2. הבעות פנים וזוויות צילום</b><p class="text-slate-600 mt-1 leading-relaxed">העלאת תמונה אישית ובקשה "תעשה שהאיש הזה יכעס" או "יקרע מצחוק", "צור לי את האיש בתמונת פרופיל", "צור לי תמונה שלו ממבט מעוף ציפור".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">3. שינוי סגנון אמנותי</b><p class="text-slate-600 mt-1 leading-relaxed">"צור את התמונה שלי בסגנון פיקסאר", "בסגנון קריקטורה", "צור את הדמות הזו בסגנון מודל תלת מימד". ניתן להעלות תמונת רפרנס לסגנון ולומר לו ליצור בסגנון הזה.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">4. החלפת אלמנטים וצבעים</b><p class="text-slate-600 mt-1 leading-relaxed"><b>שיער ובגדים:</b> "תעשה לו שיער בלונדיני ומתולתל", "שים עליו חליפה צהובה".<br><b>עיצוב פנים וחוץ:</b> תמונת סלון ובקשה "החלף את הספה הירוקה בספה כחולה", או צירוף תמונת כורסא ובקשה לשים אותה בסלון ליד החלון.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">5. שילוב בין תמונות</b><p class="text-slate-600 mt-1 leading-relaxed">תמונה אישית + מפורסם: "תעשה שהם לוחצים ידיים". תמונה אישית + בגד: "שים את הבגד על האיש בתמונה". 2-3 תמונות: "צור לי את הדמות הזו בצילומי תדמית מקצועיים". אגרטל + שולחן ולבקש לשלב. תמונת מדים ובקשה לדמות בסגנון פיקסאר עם המדים האלה.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">6. יצירת דמות עקבית</b><p class="text-slate-600 mt-1 leading-relaxed">יצירת דמות (למשל "אחות בית חולים בסגנון דיסני") ואז "אותה דמות יושבת במסעדה", אחר כך "עומדת במחלקה פנימית", אחר כך "הולכת לישון". שימושי ליצירת סיפורים ומצגות.</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">7. טקסט בעברית</b><p class="text-slate-600 mt-1 leading-relaxed">המודל מתקשה לכתוב טקסט בעברית. הפתרון: יוצרים את הטקסט הרצוי בקובץ תמונה נפרד (Canva או PowerPoint), מעלים את התמונה עם הטקסט ומבקשים "שלב את הכיתוב הזה על קיר בניין בסגנון גרפיטי", "צור לי את הכיתוב הזה מעננים".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">8. צביעת תמונות שחור-לבן</b><p class="text-slate-600 mt-1 leading-relaxed">העלאת תמונה ישנה ובקשה "צבע לי את התמונה".</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">9. מחיקה ושינוי רקע</b><p class="text-slate-600 mt-1 leading-relaxed">"תמחק לי את התיק שנמצא על האישה". "שים לי את הזוג עם רקע של חוף ים בתאילנד".</p></div>
+    </div>
+    <div class="rounded-xl p-4 mt-4 border border-cyan-200 bg-cyan-50/50 text-sm text-slate-700 leading-relaxed">
+      <b class="text-cyan-700">🔗 קשור:</b> את יסודות יצירת התמונות ואת סכנות הדיפ-פייק ראינו כבר ב<button onclick="setLesson('1');setTimeout(()=>location.hash='#features',30)" class="text-indigo-600 underline font-medium">שיעור 1</button>.
+      כאן ההתמקדות היא בעריכה של תמונות קיימות.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDES 3 -->
+<section id="slides3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מצגות</h2>
+    <p class="text-slate-500 mt-2 mb-8">הכלים המובילים היום: <b>Gamma</b> · <b>Canva</b> · <b>NotebookLM</b>. כאן נתמקד בנוטבוק, כי הוא בונה מהחומר שלכם ולא ממציא.</p>
+  </div>
+
+  <div class="glass glass-hover rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="scale" class="icon-badge w-6 h-6 text-indigo-500"></i><h3 class="font-bold text-lg">NotebookLM - יתרונות וחסרונות</h3></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">זמינות ועלות</b><p class="text-emerald-600 mt-1">מהיר מאוד, חינמי, נגיש מכל מחשב</p><p class="text-rose-500 mt-1">עבודה מוגבלת מהפלאפון</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">איכות התוכן</b><p class="text-emerald-600 mt-1">דיוק גבוה, מבוסס על המקורות שלך</p><p class="text-rose-500 mt-1">עברית דורשת תיקון ידני</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">גמישות</b><p class="text-emerald-600 mt-1">יצירה אוטומטית מהירה</p><p class="text-rose-500 mt-1">עריכה מוגבלת מחוץ לתוכנה</p></div>
+      <div class="card-soft rounded-xl p-4"><b class="text-indigo-700">היקף</b><p class="text-emerald-600 mt-1">תוצר ויזואלי מרשים</p><p class="text-rose-500 mt-1">מגבלה של עד כ-20 שקפים בכל פעם</p></div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mb-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="user-check" class="icon-badge w-5 h-5 text-purple-500"></i><h3 class="font-bold text-lg">שיטת ממ"א - איך מתחילים מהתחלה</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>👤 <b>מי</b> - הגדרת ה"כובע". האם אני אחות ראשית? אמא לילד בן שמונה? תייר באנגליה?</li>
+        <li>🎯 <b>מה</b> - מה אנחנו רוצים לעשות, הגדרת המטרה.</li>
+        <li>❓ <b>"איזה מידע אתה רוצה ממני כדי שנוכל להוציא את התוצאה הטובה ביותר?"</b></li>
+        <li>🔁 <b>תהליך הדיוק</b> - עונים על שאלות ה-AI, שואלים אם יש לו שאלות נוספות, וממשיכים לענות עד שהצ'אט מבין מה אנחנו רוצים במדויק. <b>רק בסוף</b> מבקשים: "כתוב לי שלד למצגת".</li>
+      </ul>
+      <p class="text-xs text-slate-500 mt-3">אותה שיטה בדיוק מ<button onclick="setLesson('1');setTimeout(()=>location.hash='#prompting',30)" class="text-indigo-600 underline font-medium">שיעור 1</button>, רק שהפעם התוצר הוא מצגת.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="presentation" class="icon-badge w-5 h-5 text-cyan-500"></i><h3 class="font-bold text-lg">איך יוצרים את המצגת</h3></div>
+      <ol class="text-sm text-slate-600 space-y-1.5 list-decimal pr-5">
+        <li>כניסה ל-NotebookLM ויצירת <b>מחברת חדשה</b>.</li>
+        <li>העלאת הטקסט, הקבצים והמחקרים, ואם צריך גם תמונות או <b>מצגת השראה</b>.</li>
+        <li>לחיצה על <b>סימן העיפרון או החץ הקטן</b>.</li>
+        <li>אפשר להגיד לו ליצור בעצמו על בסיס החומר, ואפשר גם לשלוט באיך עושים את זה.</li>
+      </ol>
+      <p class="text-sm text-slate-600 leading-relaxed mt-3">בחלון ההגדרות בוחרים בין <b>מצגת מפורטת</b> (טקסט מלא, לשליחה במייל) לבין <b>שקפים למציג</b> (ויזואלי, נקודות דיבור), שפה, אורך ותיאור חופשי.</p>
+    </div>
+  </div>
+
+  <div class="glass rounded-2xl p-6 md:p-8 reveal mb-5">
+    <div class="flex items-center gap-3 mb-3"><i data-lucide="palette" class="icon-badge w-6 h-6 text-amber-500"></i><h3 class="font-bold text-lg">בחירת סגנון</h3></div>
+    <ul class="text-sm text-slate-600 space-y-1.5">
+      <li>🎨 כל סגנון שעולה בראש: מקצועי, פורמלי, רשמי, נקי, סגנון פיקסר, עם או בלי לוגו, צבעים ספציפיים.</li>
+      <li>🎯 להגדיר <b>מה מטרת המצגת</b> כבר ייתן לו כיוון. לדוגמה: מצגת לישיבת צוות, מצגת למטופלים.</li>
+      <li>📏 ניתן לקבוע אם המצגת תהיה קצרה או מפורטת, ועל אילו נושאים להתמקד.</li>
+      <li>✨ מילים נוספות שעובדות: מצגת מדהימה, יפיפייה, מצחיקה, חדשנית.</li>
+      <li>☕ <b>טיפ:</b> יצירת המצגת לוקחת כמה דקות. היו סבלניים, זה הזמן לקפה.</li>
+    </ul>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="award" class="icon-badge w-5 h-5 text-emerald-500"></i><h3 class="font-bold text-lg">טיפים נוספים למקצוענים</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>🖼️ <b>שילוב ויזואליה</b> - ניתן להעלות תמונות, ציורים או לוגואים כהשראה סגנונית.</li>
+        <li>✍️ לכתוב בהנחיות: "<b>כתוב לי בעברית תקנית ומובנת</b>".</li>
+        <li>🔒 אפשר גם: "<b>התמקד בטקסט שלי, אל תוסיף ואל תשנה</b>".</li>
+        <li>↔️ "<b>הקפד על כיוון זרימה מימין לשמאל</b>".</li>
+        <li>🎨 <b>שמירה על קו עיצובי</b> - מעלים מצגת קודמת כרפרנס: "כמו המצגת שהעליתי לך, ועכשיו על פי הטקסט הבא". כך הוא ממשיך את אותו קו עיצובי.</li>
+        <li>⚠️ <b>חשוב:</b> במקרה כזה יש <b>להסיר את הסימון</b> מהטקסט הקודם ולהשאיר רק את הטקסט הרלוונטי, כדי למנוע בלבול.</li>
+        <li>☁️ <b>העלאת קובץ המקור לדרייב</b> - ואז אפשר לשנות אותו שם במקום להעלות אותו מחדש כל פעם.</li>
+      </ul>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="check-circle-2" class="icon-badge w-5 h-5 text-indigo-500"></i><h3 class="font-bold text-lg">התוצאה</h3></div>
+      <ul class="text-sm text-slate-600 space-y-1.5">
+        <li>✏️ <b>עריכה</b> - ניתן לתקן את התוכן שקופית אחר שקופית בתוך הכלי ולהגיד לו מה לשנות.</li>
+        <li>📚 <b>כמות</b> - במידה וצריך מצגת ארוכה, בונים אותה בשלבים.</li>
+        <li>⬇️ <b>הורדה</b> - ניתן להוריד את המצגת כ-PDF או בפורמט PowerPoint.</li>
+        <li>🔄 אפשר ליצור שוב ולקבל מצגת שונה עד שאנחנו מרוצים.</li>
+        <li>🖥️ מצב מציג ושיתוף.</li>
+      </ul>
+      <p class="text-xs text-slate-500 mt-3">שאר פלטי הסטודיו - פודקאסט, אינפוגרפיקה, בוחן ומפת חשיבה - מפורטים ב<button onclick="setLesson('2');setTimeout(()=>location.hash='#notebooklm2',30)" class="text-indigo-600 underline font-medium">שיעור 2</button>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS 3 -->
+<section id="tasks3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">משימות תרגול</h2>
+    <p class="text-slate-500 mt-2 mb-8">ארבע משימות שמכסות את כל השיעור. אם משהו נתקע - העלו לקבוצה.</p>
+  </div>
+  <div class="grid md:grid-cols-2 gap-5">
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="1">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="globe" class="icon-badge w-5 h-5 text-cyan-500"></i><h3 class="font-bold">אתר בשלוש דקות</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">קחו טקסט שכבר קיים אצלכם (נוהל, דף מידע, סיכום), פתחו שיחה חדשה עם קנבס דלוק ובקשו אתר על פי הטקסט הזה בלבד. אחר כך <b>פתחו מיקרופון</b> ותקנו לפחות שלושה דברים בדיבור. בסוף - שתפו בקישור.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="2">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="gem" class="icon-badge w-5 h-5 text-purple-500"></i><h3 class="font-bold">הג'ם הראשון שלכם</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">בחרו תחום אחד שחוזר אצלכם כל שבוע. התייעצו עם הצ'אט, בקשו ממנו לכתוב את ההנחיות, העבירו לכלי השני לשיפור, ורק אז פתחו ג'ם והדביקו. בדקו אותו על משימה אמיתית.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="3">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="image" class="icon-badge w-5 h-5 text-amber-500"></i><h3 class="font-bold">צעד-צעד על תמונה</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">קחו תמונה שלכם ובצעו עליה <b>שלושה שינויים נפרדים</b>, כל אחד בהודעה משלו. אחר כך נסו את אותם שלושה שינויים בהודעה אחת - ותראו בעצמכם את ההבדל.</p>
+    </div>
+    <div class="glass glass-hover rounded-2xl p-6 reveal" data-d="4">
+      <div class="flex items-center gap-2 mb-2"><i data-lucide="presentation" class="icon-badge w-5 h-5 text-indigo-500"></i><h3 class="font-bold">מצגת מהחומר שלכם</h3></div>
+      <p class="text-sm text-slate-600 leading-relaxed">בנו שלד מצגת בשיטת ממ"א, העלו אותו למחברת יחד עם חומרי המקור, וצרו מצגת. בקשו "עברית תקנית" ו"כיוון זרימה מימין לשמאל", ואז תקנו שקופית אחת ידנית.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY 3 -->
+<section id="glossary3" class="relative z-10 max-w-6xl mx-auto px-5 py-14">
+  <div class="reveal">
+    <h2 class="grad-text text-3xl md:text-4xl font-black">מילון מונחים - תוספות שיעור 3</h2>
+    <p class="text-slate-500 mt-2 mb-4">מונחים חדשים מהשיעור. למונחים קודמים - ראו
+      <button onclick="setLesson('1');setTimeout(()=>location.hash='#glossary',30)" class="text-indigo-600 underline font-medium">מילון שיעור 1</button> ו<button onclick="setLesson('2');setTimeout(()=>location.hash='#glossary2',30)" class="text-indigo-600 underline font-medium">מילון שיעור 2</button>.</p>
+    <div class="relative mb-6">
+      <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2"></i>
+      <input id="glossarySearch3" type="text" placeholder="חיפוש מונח..." class="w-full glass rounded-xl py-3 pr-12 pl-4 text-sm outline-none focus:border-indigo-400 transition">
+    </div>
+  </div>
+  <div id="glossaryGrid3" class="grid md:grid-cols-2 gap-3"></div>
+  <p id="noResults3" class="hidden text-center text-slate-400 py-8">לא נמצא מונח תואם.</p>
+</section>
+</div><!-- /lesson-block l3 -->
 
 <footer class="relative z-10 max-w-6xl mx-auto px-5 py-12 text-center text-slate-500 text-sm border-t border-indigo-100">
   מדריכים פרקטיים · מפגשי עין יעל · הכלים עלינו, היצירתיות עליכם
@@ -1138,12 +1534,95 @@ const shots2 = [
 renderShots(shots2,'צילומי מסך שיעור 2/','galleryGrid2','shots2Empty');
 renderGlossary(glossary2,'glossaryGrid2','glossarySearch2','noResults2');
 
+/* ---------- GLOSSARY 3 (lesson 3 additions) ---------- */
+const glossary3 = [
+  {t:'ג\'ם (Gem)',d:'מומחה קבוע שאתם מגדירים פעם אחת: שם, הנחיות ובסיס ידע. יושב בסרגל הצד ומוכן לשימוש חוזר, בלי להסביר לו מחדש בכל שיחה מי אתם ומה אתם רוצים.'},
+  {t:'בסיס ידע (Knowledge)',d:'החומר שהג\'ם עונה על סמכו: קבצים שהעליתם, תיקיית דרייב או מחברת נוטבוק שלמה. בלי בסיס ידע הג\'ם יודע רק את מה שכתוב לו בהנחיות.'},
+  {t:'סוכן (Agent)',d:'מקבל מטרה ולא הוראה: מפרק אותה לשלבים, מחפש, מוריד, מנסה שוב, וחוזר עם התוצאה. בניגוד לבוט הוא מבצע פעולות בעולם - ולכן דורש זהירות בהרשאות.'},
+  {t:'בוט',d:'שואלים, מקבלים תשובה, וזהו. בלי זיכרון קבוע ובלי ידע מיוחד עליכם.'},
+  {t:'ננו בננה (Nano Banana)',d:'מודל יצירת ועריכת התמונות שבתוך Gemini. קיימת גם גרסת Nano Banana Pro שדורשת מנוי ומוציאה תוצאות מדויקות יותר.'},
+  {t:'Gemini Notebook',d:'השם החדש של NotebookLM. אותו כלי, אותן מחברות ואותם קישורים - רק המיתוג מתחלף בממשק.'},
+  {t:'השילוש הקדוש',d:'ג\'ם + שיחות + נוטבוק. הג\'ם יושב על המחברת כבסיס ידע, והשיחות איתו חוזרות לתוך המחברת - כך המאגר מתעדכן מעצמו.'},
+  {t:'הקלדה קולית',d:'פתיחת המיקרופון ודיבור חופשי במקום הקלדה. כדאי להצהיר על כך במפורש למודל, כדי שיבין ששגיאות כתיב הן שגיאות תמלול ולא כוונה.'},
+  {t:'סימולציה',d:'שימוש בג\'ם כשחקן שמגלם דמות (עובד, ספק, לקוח) לתרגול שיחה קשה מראש. בסיום אומרים "סיום סימולציה" ומקבלים משוב על הביצוע.'},
+  {t:'דמות עקבית',d:'יצירת דמות אחת וחזרה עליה בסצנות שונות, כדי שכל הפרסומים או השקפים יישמרו באותו קו ויזואלי.'},
+];
+
+/* ---------- SCREENSHOTS 3 ---------- */
+const shots3 = [
+  {f:'gem 1 דגש לגלול למטה.png',t:'איפה נמצאים הג\'מס',d:'מסך הג\'מס. שימו לב: הג\'מים שלכם נמצאים מתחת לג\'מים המוכנים של גוגל - חובה לגלול למטה.',markers:[
+    {x:77.5,y:45.2,label:'Gems בסרגל הצד',d:'אחרי שיצרתם ג\'ם ראשון, השורה הזו מופיעה בסרגל הצד וזו הדרך המהירה לחזור אליו. בפעם הראשונה מגיעים לכאן דרך גלגל השיניים למטה.'},
+    {x:76.5,y:95.5,label:'גלגל השיניים',d:'נקודת הכניסה הראשונה. לוחצים עליו ובוחרים "ג\'מס". רק אחרי שיש לכם ג\'ם, הקיצור מופיע גם למעלה בסרגל.'},
+    {x:72.5,y:24.2,label:'ג\'מים מוכנים של גוגל',d:'"נוצרו מראש על ידי Google" - מהנדס תוכנה, יועץ קריירה, מעורר השראה ו-Storybook. אלה דוגמאות מוכנות, לא הג\'מים שלכם. אפשר להיכנס אליהם כדי לראות איך נראה ג\'ם עובד.'},
+    {x:72.5,y:58.4,label:'"ה-Gems שלי" - כאן מתחיל שלכם',d:'זו נקודת ההפרדה. כל מה שמעל השורה הזו הוא של גוגל, כל מה שמתחתיה הוא שלכם. זו הסיבה שחייבים לגלול למטה.'},
+    {x:5.2,y:58.4,label:'כפתור "Gem חדש"',d:'הכפתור הכחול שפותח את מסך היצירה. אם אתם לא רואים אותו - אתם עדיין גבוה מדי בעמוד.'},
+    {x:72.3,y:68.9,label:'רשימת הג\'מים שלכם',d:'כל ג\'ם עם שם ותיאור קצר. השם והתיאור הם בשבילכם בלבד, כדי שתזהו אותו - המודל עובד לפי ההנחיות, לא לפי השם.'},
+    {x:16.7,y:69,label:'שיתוף, עריכה ומחיקה',d:'שלושת האייקונים ליד כל ג\'ם: שיתוף עם אנשים אחרים, עריכת ההנחיות ותפריט נוסף. אפשר לחזור ולערוך ג\'ם בכל שלב - זה בדיוק מה שעושים כשהתוצאה לא מדויקת מספיק.'},
+    {x:77.5,y:51.3,label:'תיקיות Notebook',d:'המחברות שלכם, נגישות ישירות מתוך ג\'מיני. זה החיבור שמאפשר את "השילוש הקדוש" - ג\'ם שיושב על מחברת שלמה כבסיס ידע.'},
+  ]},
+  {f:'GEM 2 מסך חדש לא לשכוח לגלול למטה.png',t:'מסך יצירת ג\'ם',d:'שלושת המרכיבים: שם, הנחיות וידע. ההנחיות הן החלק שקובע הכל.',markers:[
+    {x:75.7,y:34.1,label:'שם',d:'איך תזהו את הג\'ם ברשימה ובסרגל הצד. לשם עצמו אין השפעה על איכות התשובות.'},
+    {x:75.7,y:44.8,label:'תיאור',d:'שדה אופציונלי שמסביר מה הג\'ם עושה. גם הוא בשבילכם, לא בשביל המודל.'},
+    {x:75.7,y:57,label:'הנחיות בסיס - החלק החשוב',d:'כאן מדביקים את הפרומפט: מי הוא, מה התפקיד שלו, איך הוא מדבר אליכם ומה אסור לו. אל תכתבו את זה בעצמכם - בקשו מהצ\'אט לכתוב לכם פרומפט מפורט, והעבירו אותו לכלי השני לשיפור לפני שאתם מדביקים לכאן.'},
+    {x:74.7,y:66.9,label:'שכתוב, ביטול וחזרה',d:'הכפתורים מתחת לשדה ההנחיות. אייקון העט משכתב ומשפר את ההנחיות אוטומטית, והחצים מבטלים או מחזירים שינוי.'},
+    {x:75.2,y:74.2,label:'כלי ברירת מחדל',d:'אפשר לקבוע מראש שהג\'ם תמיד ישתמש בכלי מסוים, למשל חיפוש בגוגל או יצירת תמונות, בלי שתצטרכו לבקש בכל פעם.'},
+    {x:75.7,y:85,label:'ידע - הוספת קבצים',d:'כאן מחברים את בסיס הידע. אפשר להעלות קבצים מהמחשב, לחבר קבצים מגוגל דרייב, או לחבר מחברת נוטבוק שלמה. זה מה שהופך את הג\'ם ממישהו שיודע לדבר יפה למישהו שמכיר את החומר שלכם.'},
+    {x:75.5,y:91.1,label:'השבתת ציטוטים ממקורות ידע',d:'כברירת מחדל הג\'ם מציין מאיזה קובץ הגיעה כל תשובה. אפשר לכבות את זה אם רוצים תשובה נקייה, אבל אז מאבדים את היכולת לבדוק אותו.'},
+    {x:41.8,y:29.9,label:'תצוגה מקדימה',d:'החלון השמאלי מאפשר לבדוק את הג\'ם לפני שמירה. תבדקו אותו על שאלה אמיתית אחת לפחות - הרבה פעמים מגלים כאן שההנחיות לא ברורות מספיק.'},
+    {x:18,y:23.7,label:'שמירה',d:'בלי לחיצה על שמירה הג\'ם לא נוצר. אפשר לחזור ולערוך אותו בכל שלב אחר כך.'},
+    {x:93,y:35.8,label:'Gems',d:'הדרך לחזור לרשימת כל הג\'מים.'},
+  ]},
+  {f:'גוגל קנבס.png',t:'אפליקציה שנבנתה בקנבס',d:'מחולל הסכמי ההתקשרות שנבנה בשיעור - אפליקציה עובדת עם מילוי טופס והקלדה קולית.',markers:[
+    {x:83.8,y:88,label:'כפתור Canvas',d:'הכפתור שחייב להיות דלוק לפני ששולחים את ההודעה. הוא מה שגורם לתשובה להיפתח כסביבת עבודה בצד ולא כטקסט בצ\'אט.'},
+    {x:93.8,y:88,label:'כפתור +',d:'העלאת הקבצים. כאן מצרפים את המסמך הקיים שרוצים שהאפליקציה תדע לשחזר.'},
+    {x:70.1,y:88,label:'בורר המודל',d:'בחירת המודל. תמיד עדיף מודל עם חשיבה מעמיקה - לוקח כמה שניות יותר, אבל הקוד שנוצר יוצא טוב יותר.'},
+    {x:64.6,y:88,label:'מיקרופון',d:'הכלי המרכזי של השיעור. במקום להקליד תיקונים, פותחים מיקרופון ומדברים. כדאי להצהיר "אני עושה הקלדה קולית" כדי שיבין ששגיאות הכתיב הן תמלול.'},
+    {x:6.8,y:20.5,label:'סגירת הקנבס',d:'סוגר את הפאנל וחוזר לצ\'אט. האפליקציה נשמרת ואפשר לפתוח אותה שוב מהשיחה.'},
+    {x:10.6,y:20.5,label:'שיתוף',d:'יוצר קישור לאפליקציה שאפשר לשלוח לכל אחד. שימו לב: כל שינוי מחייב שיתוף מחדש, הקישור הישן לא מתעדכן לבד.'},
+    {x:15.6,y:20.5,label:'הורדה',d:'הורדת האפליקציה כקובץ.'},
+    {x:27.7,y:20.5,label:'קוד / תצוגה מקדימה',d:'מעבר בין המראה של האפליקציה לבין הקוד שמאחוריה. אתם לא צריכים להבין בקוד - זה שם בשביל המודל, לא בשבילכם.'},
+    {x:17.8,y:29.7,label:'טען דוגמה',d:'כפתור שהמודל בנה לבד לפי הבקשה - ממלא את הטופס בנתוני דוגמה כדי לבדוק שהכל עובד לפני שמזינים נתונים אמיתיים.'},
+    {x:45.2,y:43.6,label:'מילוי טופס',d:'מצב אחד של האפליקציה: שדות מוכנים שממלאים ידנית. מתאים כשיש פורמט קבוע וידוע מראש.'},
+    {x:18.2,y:43.6,label:'דיבור / טקסט חופשי AI',d:'המצב השני: מדברים או מדביקים טקסט חופשי והאפליקציה שולפת לבד את הפרטים לשדות. זו האופציה שביקשנו במפורש מהמודל להוסיף - בלי לבקש היא לא נוצרת.'},
+    {x:31.8,y:67.2,label:'שדות הטופס',d:'השדות שהמודל זיהה כדפוסים חוזרים במסמך המקורי: שם המנחה, עוסק מורשה, דוא"ל, נושא הסדנה. זו התוצאה של השלב הראשון - "תזהה מה הדפוסים החוזרים".'},
+    {x:88.5,y:50,label:'הפרומפט שהמודל כתב',d:'הפרומפט המלא להטמעה בקנבס, שנוצר בשיחה הרגילה לפני שפתחנו קנבס. את זה מעתיקים לשיחה חדשה יחד עם המסמך.'},
+  ]},
+  {f:'מצגת 1.png',t:'הגדרות המצגת לפני יצירה',d:'החלון שנפתח בלחיצה על העיפרון ליד "מצגת" בפאנל הסטודיו. כאן שולטים בתוצר במקום לתת למודל יד חופשית.',markers:[
+    {x:82.8,y:40,label:'מצגת מפורטת',d:'טקסט מלא ופרטים מושלמים - מתאים למצגת שנשלחת במייל ונקראת לבד, בלי מישהו שמציג אותה.'},
+    {x:50.3,y:40,label:'שקפים למציג',d:'שקפים ויזואליים עם נקודות עיקריות בלבד, שיעזרו לכם בזמן העברת המצגת. זו הבחירה הנכונה כשאתם עומדים מול קהל.'},
+    {x:83.6,y:64.7,label:'בחירת שפה',d:'בוחרים עברית. גם אחרי שבוחרים, כדאי לכתוב בשדה התיאור "עברית תקנית" ו"כיוון זרימה מימין לשמאל" - זה משפר את התוצאה.'},
+    {x:61.4,y:63.8,label:'אורך',d:'קצר או ברירת מחדל. למצגת ארוכה עדיף לבנות בשלבים ולא לבקש הכל בבת אחת.'},
+    {x:39.7,y:63.6,label:'מקורות',d:'בחירת המקורות שהמצגת תתבסס עליהם. זה השדה הקריטי כשמעלים מצגת רפרנס: משאירים מסומן רק את הטקסט הרלוונטי ומורידים את הסימון מהחומר הישן, אחרת הוא מתבלבל.'},
+    {x:83.6,y:73.3,label:'תיאור המצגת',d:'השדה החופשי, וכאן נמצא כל ההבדל. מגדירים סגנון, קהל יעד ומטרה: "מצגת למתחילים בסגנון נועז ושובב", "מצגת לישיבת צוות", "התמקד בטקסט שלי, אל תוסיף ואל תשנה".'},
+    {x:15.7,y:91.7,label:'יצירה',d:'היצירה לוקחת כמה דקות. זה הזמן לקפה.'},
+    {x:3.9,y:38.6,label:'פאנל הסטודיו',d:'מצגת, מפת חשיבה, כרטיסי עזר ואינפוגרפיקה. כל פלט נוצר מאותם מקורות. פירוט מלא של הפאנל נמצא בשיעור 2.'},
+    {x:18.9,y:21.3,label:'סגירה',d:'סוגר את חלון ההגדרות בלי ליצור.'},
+    {x:36.6,y:97.5,label:'"Gemini Notebook"',d:'שימו לב לשם בשורת האזהרה למטה: גוגל מחליפה את השם NotebookLM ל-Gemini Notebook. אותו כלי בדיוק.'},
+  ]},
+  {f:'מצגות עריכה.png',t:'עריכת המצגת שקף אחר שקף',d:'אחרי שהמצגת נוצרה - מתקנים אותה בתוך הכלי, בלי לייצא ובלי להתחיל מחדש.',markers:[
+    {x:20.2,y:44.4,label:'תמונות ממוזערות של השקפים',d:'כל השקפים בטור אחד. לוחצים על שקף כדי לבחור אותו, והמסגרת הכחולה מסמנת איזה שקף פעיל כרגע.'},
+    {x:67.8,y:45.8,label:'תצוגת השקף',d:'השקף הנבחר בגדול. כאן בודקים בעין את מה שהכי חשוב בעברית: שהטקסט לא התהפך ושהכיוון מימין לשמאל.'},
+    {x:93.5,y:58.5,label:'שינוי שקף',d:'הכותרת מראה על איזה שקף אתם עובדים. העריכה היא תמיד לשקף אחד בכל פעם.'},
+    {x:94,y:68.6,label:'שדה ההנחיה',d:'כותבים בשפה חופשית מה לשנות: "מקם את התמונה במרכז הדף", "קצר את הכותרת". בדיוק כמו לדבר עם מעצב.'},
+    {x:43.6,y:86.4,label:'השינויים בהמתנה',d:'המונה שסופר כמה שינויים ביקשתם ועדיין לא הוחלו. אפשר לצבור כמה תיקונים על כמה שקפים ורק אז להריץ.'},
+    {x:6.8,y:86.4,label:'יצירת מצגת מתוקנת',d:'מפעיל את כל השינויים שנצברו ומייצר גרסה חדשה של המצגת.'},
+    {x:27.9,y:86.4,label:'ביטול',d:'מבטל את השינויים שנצברו בלי להחיל אותם.'},
+    {x:18.4,y:24.6,label:'מצב מציג',d:'פותח את המצגת במסך מלא להצגה מול קהל.'},
+    {x:15.3,y:24.6,label:'שיתוף',d:'שיתוף המצגת עם אחרים.'},
+    {x:12,y:24.6,label:'הורדה',d:'הורדת המצגת כ-PDF או בפורמט PowerPoint.'},
+    {x:94,y:30.6,label:'הצגת ההנחיה ומקור אחד',d:'מראה על סמך איזו הנחיה ואילו מקורות נבנתה המצגת. שימושי כשהתוצאה לא מה שציפיתם ורוצים להבין למה.'},
+    {x:23.2,y:18.6,label:'שיתוף המחברת',d:'שיתוף כל המחברת, לא רק המצגת. שימו לב: מחברת שיש בה שיחות מג\'מיני לא ניתנת לשיתוף.'},
+  ]},
+];
+renderShots(shots3,'צילומי מסך שיעור 3/','galleryGrid3','shots3Empty');
+renderGlossary(glossary3,'glossaryGrid3','glossarySearch3','noResults3');
+
 /* ---------- LESSON SWITCHER ---------- */
 function setLesson(n){
   document.body.setAttribute('data-lesson',n);
   document.querySelectorAll('.lesson-pill').forEach(b=>b.classList.toggle('active',b.dataset.lessonBtn===String(n)));
   try{localStorage.setItem('einyael_lesson',n);}catch(e){}
-  if(n==='1'||n==='2') history.replaceState(null,'','#lesson'+n);
+  if(n==='1'||n==='2'||n==='3') history.replaceState(null,'','#lesson'+n);
   else history.replaceState(null,'',location.pathname);
   window.scrollTo({top:0,behavior:'instant'});
   closeAllPops();
@@ -1221,7 +1700,7 @@ updateProgress();
 (function initLesson(){
   const h=location.hash;
   let start='0';
-  if(h==='#lesson1')start='1';else if(h==='#lesson2')start='2';
+  if(h==='#lesson1')start='1';else if(h==='#lesson2')start='2';else if(h==='#lesson3')start='3';
   setLesson(start);
 })();
 </script>
